@@ -1,0 +1,28 @@
+.topnav a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  .topnav {
+      background-color: gray;
+  }
+  .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  .topnav + div {
+      padding: 15px;
+  }
+
+  button {
+    cursor: pointer;
+  }

@@ -1,0 +1,118 @@
+header {
+    
+    li {
+        list-style-type: none;
+    }
+    a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    hr {
+        margin-top: 100px;
+    }
+    .header-top {
+            .logo {
+                img {
+                height:auto;
+                width: 400px;
+                }
+            }
+            .login {
+                .form-login {
+                position: relative;
+                text-align: right;
+                padding-top: 10px;
+
+                div {
+                    display: inline-block;
+                    position: relative;
+                    div {
+                        position: absolute;
+                        padding: 5px 12px 8px 12px;
+                        background-color: #80808026;
+                        top: 0;
+                    }
+                    input {
+                        padding: 5px 0 5px 41px;
+                    }
+                }
+                button {
+                    margin-top: -4px;
+                    background-color: #80808026;
+                }
+            }
+            .forget-password {
+                padding-top: 5px;
+                text-align: right;
+            }
+            }
+        }
+
+    .header-middle {
+            padding-top: 50px;
+            .nav {
+              >ul {
+                    display: flex;
+                    >li {
+                        padding: 10px 20px;
+                        position: relative;
+                        &.active {
+                            color: #00abff;
+                        }
+                        span {
+                            cursor: pointer;
+                        }
+                        i {
+                            padding-left: 2px;
+                        }
+                        &:hover span{
+                            opacity:0.6;
+                        }
+                        &:hover ul {
+                            display: block;
+                        }
+                        ul {
+                            min-width: 180px;
+                            position: absolute;
+                            top: 100%;
+                            left: -1px;
+                            padding: 0;
+                            border: solid 1px #80808026;
+                            box-shadow: 0 3px 3px #80808026;
+                            z-index: 100;
+                            display: none;
+                            li {
+                                &:hover {
+                                    background-color: #80808026;
+                                }
+                                a {
+                                    display: inline-block;
+                                    width: 100%;
+                                    padding: 5px 12px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+           .search {
+               position: relative;
+               display: inline-block;
+               input {
+                   padding: 5px 38px 5px 5px;
+               }
+               .search-icon {
+                position:absolute;  
+                top: 0; 
+                right: 0;
+                padding: 5px 12px;
+               }
+           }
+        }
+
+    
+    }
+
+   
