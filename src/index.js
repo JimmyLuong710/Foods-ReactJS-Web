@@ -3,18 +3,14 @@ import ReactDOM from 'react-dom';
 import './assets/styles/index.scss';
 import reportWebVitals from './reportWebVitals';
 import {Provider } from 'react-redux'
-import {createStore} from 'redux';
-import rootReducer from "./store/reducers/rootReducer";
 import Routers from './routes/Routers';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import store from './redux/store'
 
 
-const reduxStore = createStore(rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={reduxStore}>
+    <Provider store={store}>
      <Routers />
     </Provider>
   </React.StrictMode>,

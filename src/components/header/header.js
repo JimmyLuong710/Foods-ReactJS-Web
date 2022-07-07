@@ -1,109 +1,79 @@
 import "./header.scss";
 import { FaKey, FaUserAlt } from "react-icons/fa";
-import { AiOutlineDown, AiOutlineSearch } from "react-icons/ai";
-import {Link} from 'react-router-dom'
+import { AiOutlineDown, AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { FaUserCircle } from "react-icons/fa";
+import { useState } from "react";
 
-const Header = () => {
+
+const Header = (props) => {
+  let loggedIn = true
+  //  useSelector((state) => state.auth.login.loggedIn)
+  let user =  useSelector((state) => state.auth.login.user)
+ 
+  const handleSearchKeyDown = (e) => {
+    if(e.key === 'Enter') {
+      alert('aloooooo')
+    }
+  }
+  const handleClickSearchButton = (e) => {
+    alert('allooooo')
+  }
+
   return (
-    <header>
-      <div className="container-fluid">
+    <div className="container">
+      <header>
+      <div className="container">
         <div className="header-top">
           <div className="row">
             <div className="col-lg-6 logo">
-              <img src={require("../../assets/image/logo.png")} alt="logo image" />
+              <Link to="/" >             
+               <img
+                src={require("../../assets/image/logo.png")}
+                alt="logo image"
+              /></Link>
             </div>
-            <div className="col-lg-6 login">
-              <div className="form-login">
-                <form action="" method="post">
-                  <div className="user-input">
-                    <div className="user-icon">
-                      <FaUserAlt />
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Username"
-                      name="user-name"
-                    />
-                  </div>
-                  <div className="password-input">
-                    <div className="pass-word-icon">
-                      {" "}
-                      <FaKey />{" "}
-                    </div>
-                    <input type="text" placeholder="Password" name="password" />
-                  </div>
-                  <button className="btn btn-login" type="submit">
-                    Login
-                  </button>
-                </form>
-              </div>
-              <div className="forget-password">
-                <p>
-                  <Link to="/forgot-password">quên mật khẩu?</Link>
-                  <Link to="/sign-up"> đăng ký? </Link>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="header-middle">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-4"></div>
             <div className="col-lg-6">
-              <div className="nav">
-                <ul>
-                  <li className="active">
-                    <span>Home</span>
-                  </li>
-                  <li className="dropdown">
-                    <span> Đồ ăn</span> <AiOutlineDown />
-                    <ul>
-                      <li>
-                        <a href="">Hải sản</a>
-                      </li>
-                      <li>
-                        <a href="">Đặc sản</a>
-                      </li>
-                      <li>
-                        <a href="">Các món hot</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="dropdown">
-                    <span> Đồ uống </span> <AiOutlineDown />
-                    <ul>
-                      <li>
-                        <a href="">Trà sữa</a>
-                      </li>
-                      <li>
-                        <a href="">Đa dạng</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <span> Bán chạy </span>
-                  </li>
-                  <li>
-                    <span> Call Me </span>
-                  </li>
-                </ul>
+              <div className="header-top-right">
+                {loggedIn ? 
+                <>
+                <Link className="link-to-cart" to="/cart">
+                <AiOutlineShoppingCart className="cart-icon" />
+                Giỏ hàng
+                </Link>
+                <span className="text-capitalize"><FaUserCircle /> {user?.userName}
+                  <ul className="user-action">
+                    <Link to="/" ><li>  Sửa thông tin </li></Link>
+                    <Link to="/"><li> Đơn mua </li></Link>
+                    <Link to="/manage-user"><li> Quản lý người dùng </li></Link>
+                    <Link to="/manage-product"><li> Quản lý sản phẩm </li></Link>
+                    <Link to="/"><li> Đăng xuất </li></Link>
+                  </ul>
+                </span>
+                </>
+                : 
+                <>
+                <button>
+                 <Link to="/login">ĐĂNG NHẬP</Link> 
+                </button>
+                <button>
+                 <Link to="/sign-up"> ĐĂNG KÝ</Link>
+                </button></>
+}
               </div>
             </div>
-            <div className="col-lg-2">
-              <div className="search">
-                <input type="text" placeholder="Search..." />
+            <div className="search">
+                <input type="text" placeholder="Tìm kiếm mòn ăn"  onKeyDown={(e) => handleSearchKeyDown(e)}/>
                 <div className="search-icon">
-                  <AiOutlineSearch />
+                  <AiOutlineSearch onClick={(e) => handleClickSearchButton(e)}/>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
-      <hr />
     </header>
+    </div>
   );
 };
 

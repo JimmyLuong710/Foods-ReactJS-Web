@@ -5,9 +5,10 @@ import "swiper/css/pagination";
 import { Navigation,FreeMode, Pagination } from "swiper";
 import "./product.scss";
 import "swiper/css/bundle";
+import ProductCard from "../../components/product-card/product-card";
 
 const ProductsOverRate = () => {
-
+  let array = [1,2,34,3,32,5,6,3,56,32]
   return (
   <div className="product-overrate">
     <div className="container">
@@ -17,147 +18,18 @@ const ProductsOverRate = () => {
      grabCursor={true}
      spaceBetween={10}
      slidesPerView={'auto'}
-     pagination={{
-       clickable: true,
-     }}
+    //  pagination={{
+    //    clickable: true,
+    //  }}
      freeMode={true}
      modules={[Pagination, Navigation, FreeMode]}
    >
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
-     <SwiperSlide>
-     <div className="card border-primary">
-           <div className="card__img">
-             <img className="card-img-top" src={require("../../assets/image/bap-xao.jpg")} alt="" />
-           </div>
-           <div className="card-body">
-             <h4 className="card__title">Bắp xào</h4>
-             <p className="card__disciption">giá: <span>2$</span></p>
-             <p className="card__disciption">đánh giá: <span>tốt</span></p>
-           </div>
-           <div className="add-to-cart">
-             <button>Thêm vào giỏ</button>
-           </div>
-         </div>
-     </SwiperSlide>
+      {array.map((item, index) => (
+            <SwiperSlide >
+              <ProductCard />
+            </SwiperSlide >
+          ))}
+    
    </Swiper>
    </div>
    </div>

@@ -23,7 +23,7 @@ const Footer = () => {
             <li><a href=""><img  src={require("../../assets/image/pay3.png")} alt="payment" /></a></li>
             <li><a href=""><img  src={require("../../assets/image/pay4.jpg")} alt="payment" /></a></li>
             <li><a href=""><img  src={require("../../assets/image/pay5.jpg")} alt="payment" /></a></li>
-          </ul>alt="payment" 
+          </ul>
         </div>
        </div>
     )

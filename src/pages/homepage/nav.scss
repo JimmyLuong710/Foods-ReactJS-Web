@@ -1,0 +1,30 @@
+.header-middle {
+    padding-top: 10px;
+    .nav {
+      >ul {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            >li {
+                padding: 10px 20px;
+                position: relative;
+                list-style-type: none;
+                &.active {
+                    color: #00abff;
+                }
+                span {
+                    cursor: pointer;
+                }
+                i {
+                    padding-left: 2px;
+                }
+                &:hover span{
+                    opacity:0.6;
+                }
+                &:hover ul {
+                    display: block;
+                }
+            }
+        }
+    }
+}

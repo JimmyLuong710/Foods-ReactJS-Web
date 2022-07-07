@@ -1,0 +1,48 @@
+
+.management-users {
+    .title {
+        background-color: #3C8DC2;
+        padding: 10px;
+        h3{
+            color: white;
+        }
+        span {
+            float: right;
+            background-color: white;
+            color: #3C8DC2;
+            // margin: 4px 5px;
+            padding: 5px;
+            &:hover {
+                opacity: 0.7;
+                cursor: pointer;
+            }
+        }
+        .adduser-form {
+                p {
+                    position: absolute;
+                    top: 0;
+                    color: red !important;
+                }
+        }
+    }
+    table {
+        .pencil {
+            color: orange;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .bin {
+            color: red;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+    }
+}
+
+.adduser-form {
+    p {
+        position: absolute;
+        // top: 0;
+        color: red;
+    }
+}

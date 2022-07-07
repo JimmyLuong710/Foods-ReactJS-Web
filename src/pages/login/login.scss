@@ -20,21 +20,31 @@
     background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
     }
 
-.card-sign-up {
-    padding: 10px 50px 0 !important;
-    height: 100vh;
-    overflow-y: scroll; 
-}
 .message {
     color: red;
     margin: 0;
 }
-.card-sign-up {
+.card-login {
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
     overflow-y: scroll; 
+    padding: 70px;
+    height: 100vh;
+    .form-login {
+        margin-top: 60px;
+        .login-options {
+            margin-top: 70px;
+            p {
+                margin: 5px;
+                padding: 0;
+                a {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
 }
 
-.card-sign-up::-webkit-scrollbar {
+.card-login::-webkit-scrollbar {
     display: none; /* for Chrome, Safari, and Opera */
 }

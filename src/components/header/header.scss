@@ -1,5 +1,5 @@
 header {
-    
+    padding-bottom: 10px;
     li {
         list-style-type: none;
     }
@@ -10,108 +10,87 @@ header {
         }
     }
     hr {
-        margin-top: 100px;
+        margin-top: 10px;
     }
     .header-top {
             .logo {
                 img {
+                margin-top: 10px;
                 height:auto;
-                width: 400px;
+                width: 200px;
                 }
             }
-            .login {
-                .form-login {
-                position: relative;
+            .header-top-right {
+                
                 text-align: right;
-                padding-top: 10px;
-
-                div {
-                    display: inline-block;
-                    position: relative;
-                    div {
-                        position: absolute;
-                        padding: 5px 12px 8px 12px;
-                        background-color: #80808026;
-                        top: 0;
+                padding: 10px 0;
+                .link-to-cart {
+                    margin: 0 20px;
+                    .cart-icon {
+                        font-size: 25px;
+                        margin: 0 5px;
                     }
-                    input {
-                        padding: 5px 0 5px 41px;
+                }
+                span {
+                    position: relative;
+                    padding-bottom: 10px;
+                    &:hover ul {
+                        display: block;
+                    }
+                    .user-action {
+                        padding: 0;
+                        position: absolute;
+                        top: calc(100%);
+                        right: 0;
+                        width: 190px;
+                        text-align: left;
+                        display: none;
+                        border: 1px solid gray;
+                        box-shadow: 0 3px 3px 2px #80808024;
+                        z-index: 100;
+                        background-color: white;
+                        li{
+                            padding: 4px 15px;
+                        &:hover {
+                            background-color: #80808024;
+                        }
+                    }
                     }
                 }
                 button {
-                    margin-top: -4px;
-                    background-color: #80808026;
-                }
-            }
-            .forget-password {
-                padding-top: 5px;
-                text-align: right;
-            }
-            }
-        }
-
-    .header-middle {
-            padding-top: 50px;
-            .nav {
-              >ul {
-                    display: flex;
-                    >li {
-                        padding: 10px 20px;
-                        position: relative;
-                        &.active {
-                            color: #00abff;
-                        }
-                        span {
-                            cursor: pointer;
-                        }
-                        i {
-                            padding-left: 2px;
-                        }
-                        &:hover span{
-                            opacity:0.6;
-                        }
-                        &:hover ul {
-                            display: block;
-                        }
-                        ul {
-                            min-width: 180px;
-                            position: absolute;
-                            top: 100%;
-                            left: -1px;
-                            padding: 0;
-                            border: solid 1px #80808026;
-                            box-shadow: 0 3px 3px #80808026;
-                            z-index: 100;
-                            display: none;
-                            li {
-                                &:hover {
-                                    background-color: #80808026;
-                                }
-                                a {
-                                    display: inline-block;
-                                    width: 100%;
-                                    padding: 5px 12px;
-                                }
-                            }
-                        }
+                    margin: 2px;
+                    padding: 10px;
+                    border: none;
+                    outline: none;
+                    border-radius: 10%;
+                    &:hover {
+                        background-color:#00aaff;
+                    }
+                    &:hover a {
+                        color: white;
                     }
                 }
             }
-           .search {
-               position: relative;
+            .search {
+                text-align: center;
+                position: relative;
                display: inline-block;
+               margin: 0 auto;
+               width: 70%;
                input {
                    padding: 5px 38px 5px 5px;
+                   width: 100%;
                }
                .search-icon {
                 position:absolute;  
-                top: 0; 
-                right: 0;
+                font-size: 20px;
+                top: -3px; 
+                right: 10px;
                 padding: 5px 12px;
+                cursor: pointer;
                }
-           }
+            }
         }
-
     
     }
 
