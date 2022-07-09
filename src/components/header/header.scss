@@ -51,6 +51,7 @@ header {
                         background-color: white;
                         li{
                             padding: 4px 15px;
+                            cursor: pointer;
                         &:hover {
                             background-color: #80808024;
                         }
@@ -59,7 +60,7 @@ header {
                 }
                 button {
                     margin: 2px;
-                    padding: 10px;
+                    
                     border: none;
                     outline: none;
                     border-radius: 10%;
@@ -68,6 +69,10 @@ header {
                     }
                     &:hover a {
                         color: white;
+                    }
+                    a {
+                        padding: 10px;
+                        display: inline-block;
                     }
                 }
             }

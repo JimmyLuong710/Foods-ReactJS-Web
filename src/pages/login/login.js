@@ -81,11 +81,6 @@ const Login = () => {
                     <div className="login-options">
                     <p className="text-center text-muted">
                       <Link to="/">
-                        Đăng nhập với Google?
-                      </Link>
-                    </p>
-                    <p className="text-center text-muted">
-                      <Link to="/">
                         Quên mật khẩu?
                       </Link>
                     </p>

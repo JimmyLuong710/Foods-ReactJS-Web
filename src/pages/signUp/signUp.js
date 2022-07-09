@@ -8,6 +8,7 @@ import { registerUser } from "../../redux/apiRequests";
 
 const SignUp = () => {
   const navigate = useNavigate()
+  let userRegister = useSelector(state => state.auth.register)
 
   const dispatch = useDispatch()
 

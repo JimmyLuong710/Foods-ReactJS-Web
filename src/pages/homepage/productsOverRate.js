@@ -9,7 +9,7 @@ import ProductCard from "../../components/product-card/product-card";
 import { useSelector } from "react-redux";
 
 const ProductsOverRate = () => {
-  let allProduct = useSelector(state => state.user.products.products)
+  let allProduct = useSelector(state => state.admin.products.products)
   return (
   <div className="product-overrate">
     <div className="container">
@@ -23,7 +23,7 @@ const ProductsOverRate = () => {
      modules={[Pagination, Navigation, FreeMode]}
    >
       {allProduct?.map((item, index) => (
-            <SwiperSlide >
+            <SwiperSlide key={index}>
               <ProductCard 
               item = {item}
               />

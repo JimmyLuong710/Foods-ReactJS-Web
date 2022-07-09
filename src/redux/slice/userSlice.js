@@ -1,71 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const usersSlice = createSlice({
-    name: 'user',
-    initialState: {
-       users: {
-        users: null,
-        pending: false,
-        error: false
-       },
-        products: {
-            products: null,
-            pending: false,
-            error: false
-        }
+const userSlice = createSlice({
+  name: "user",
+  initialState: {
+    productsInPayMent: [],
+    productsInCart: null
+  },
+  reducers: {
+    getPoductsInPayMent: (state, action) => {
+      let _data = [...action.payload]
+        state.productsInPayMent = _data
     },
-    reducers: {
-        getUsersStart: (state) => {
-            state.pending = true
-        },
-        getUsersSuccess: (state, action) => {
-            state.pending = false
-            state.error = false
-            state.users.users = action.payload
-        },
-        getUsersFailed: (state) => {
-            state.pending = false
-            state.error = true
-        },
-        addUserSuccess: (state, action) => {
-            let _users = state.users.users
-            _users.push(action.payload)
-            state.users.users = _users
-        },
-        deleteUserSuccess: (state, action) => {
-            let _users = state.users.users.filter(u => u.id !== action.payload)
-            state.users.users = _users
-        },
+    getProductsInCart: (state, action) => {
 
-        getAllProductsStart: (state) => {
-            state.pending = true
-        },
-        getAllProductsSuccess: (state, action) => {
-            state.pending = false
-            state.error = false
-            state.products.products = action.payload
-        },
-        getAllProductsFailed: (state) => {
-            state.pending = false
-            state.error = true
-        },
-        deleteProductSuccess: (state, action) => {
-            let _products = state.products.products.filter(p => p.id !== action.payload)
-            state.products.products = _products
-        },
-        addProductSuccess: (state, action) => {
-            let _products = state.products.products
-            _products.push(action.payload)
-            state.products.products = _products
-        },
-        updateProductSuccess: (state, action) => {
-            let _products = state.products.products
-            _products[action.payload.index] = action.payload.data
-            state.products.products = _products
-        }
     }
-})
+  },
+});
 
-export const {getUsersStart, getUsersSuccess, getUsersFailed, addUserSuccess, deleteUserSuccess,
-    getAllProductsStart, getAllProductsSuccess, getAllProductsFailed, deleteProductSuccess, updateProductSuccess, addProductSuccess} = usersSlice.actions
-export default usersSlice.reducer
+export const {getPoductsInPayMent, getProductsInCart} = userSlice.actions;
+export default userSlice.reducer;

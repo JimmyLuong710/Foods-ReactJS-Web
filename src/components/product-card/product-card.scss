@@ -40,6 +40,7 @@
     .add-to-cart {
         text-align: center;
         margin: 10px 0;
+        z-index: 10000;
         button {
             outline: none;
             border:none;

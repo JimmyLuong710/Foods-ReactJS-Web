@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 const Product = () => {
  
-  let allProduct = useSelector(state => state.user.products.products)
+  let allProduct = useSelector(state => state.admin.products.products)
   return (
     <div className="new-products">
       <div className="container">
@@ -28,7 +28,7 @@ const Product = () => {
           modules={[Pagination, Navigation, FreeMode]}
         >
           {allProduct?.map((item, index) => (
-            <SwiperSlide >
+            <SwiperSlide key={index}>
               <ProductCard 
               item = {item}
               />

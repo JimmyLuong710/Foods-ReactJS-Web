@@ -3,31 +3,36 @@ import Footer from "../../components/footer/footer";
 import "./productDetails.scss";
 import { useState, useEffect } from "react";
 import { BsCashCoin } from "react-icons/bs";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getOneProduct } from "../../redux/apiRequests";
 import { addToCart } from "../../redux/apiRequests";
 import createAxiosJWT from "../../axiosJWT";
 import { loginSuccess } from "../../redux/slice/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { getPoductsInPayMent } from "../../redux/slice/userSlice";
 
 const ProductDetails = () => {
+  console.log('this is product details')
   let red = "red";
   let loginUser = useSelector(state => state.auth.login.user)
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   let [data, setData] = useState({});
   let dispatch = useDispatch()
+  let navigate = useNavigate()
   const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess)
-  useEffect(async () => {
-    let _data = await getOneProduct(id);
-    setData(_data);
-  }, []);
+
+
   const changeQuantity = (change) => {
     if (change === 1) setQuantity((prev) => prev + 1);
     if (change === -1 && quantity > 1) setQuantity((prev) => prev - 1);
   };
   const handleAddToCart = () => {
+    if(!loginUser) {
+      navigate('/login')
+      return
+    }
     let addition = {
       userId: loginUser?.id,
       productId: id,
@@ -35,6 +40,28 @@ const ProductDetails = () => {
     }
     addToCart(loginUser.accessToken, addition, axiosJWT)
   }
+  const redirectToPayment = () => {
+    if(!loginUser) {
+      navigate('/login')
+      return
+    }
+    let _data = [
+      [{
+      userId: loginUser.id,
+      productId: id,
+      quantityAdded: quantity,
+      Product: data
+      }],
+       quantity,
+       data.price * quantity
+    ]
+    dispatch(getPoductsInPayMent(_data))
+    navigate('/payment')
+  }
+  useEffect(async () => {
+    let _data = await getOneProduct(id);
+    setData(_data);
+  }, []);
   return (
     <div className="container product-details">
       <Header />
@@ -82,9 +109,9 @@ const ProductDetails = () => {
             </div>
             <div className="action">
               <button type="button" className="btn btn-primary">
-                <Link to="/payment">
+                <span onClick={redirectToPayment}>
                   <BsCashCoin /> &nbsp; Mua ngay
-                </Link>
+                </span>
               </button>
               <button type="button" className="btn btn-primary" 
               onClick={handleAddToCart}

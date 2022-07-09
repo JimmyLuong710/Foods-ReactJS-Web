@@ -3,49 +3,81 @@ import Footer from "../../components/footer/footer";
 import { useEffect, useState } from "react";
 import "./cart.scss";
 import { BsCashCoin } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import createAxiosJWT from "../../axiosJWT";
 import { loginSuccess } from "../../redux/slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsInCart, updateProductInCart, deleteProductInCart } from "../../redux/apiRequests";
+import { getPoductsInPayMent } from "../../redux/slice/userSlice";
 
 const Cart = () => {
   let loginUser = useSelector((state) => state.auth.login.user);
   const [productsInCart, setProductsInCart] = useState();
+  const [totalIncart, setTotalIncart] = useState();
+  const [totalPriceInCart, setTotalPriceInCart] = useState();
   let dispatch = useDispatch();
+  let navigate = useNavigate()
   const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess);
 
-  const changeQuantity = (change, index) => {
-    if (change === 1) {
-      let data = productsInCart
-      data[index].quantityAdded = data[index].quantityAdded + 1
-      console.log(data[index])
-      setProductsInCart(data)
+  const changeQuantity = (change, item, index) => {
+    let addition = {
+      userId: item.userId,
+      productId: item.productId,
+      quantityAdded: 0
     }
-    if (change === -1 ) {
-      let data = productsInCart
-      if(data[index].quantityAdded > 1) {
-      data[index].quantityAdded = data[index].quantityAdded - 1
-      setProductsInCart(data)
+    if (change === 1) {
+      let pros = [...productsInCart]
+      pros[index].quantityAdded = pros[index].quantityAdded + 1
+      addition.quantityAdded = pros[index].quantityAdded
+      setProductsInCart(pros)
+      setTotalIncart(prev => prev + 1)
+      setTotalPriceInCart(prev => prev + item.Product.price)
+      updateProductInCart(loginUser.accessToken,addition, axiosJWT)
+    }
+    else if (change === -1 ) {
+      let pros = [...productsInCart]
+      if(pros[index].quantityAdded > 1) {
+        debugger
+        pros[index].quantityAdded = pros[index].quantityAdded - 1
+        addition.quantityAdded = pros[index].quantityAdded
+        setProductsInCart(pros)
+        setTotalIncart(prev => prev -1)
+        setTotalPriceInCart(prev =>  prev - item.Product.price)
+        updateProductInCart(loginUser.accessToken,addition, axiosJWT)
       }
     }
   };
  
-  const handleDeleteProduct = (userId, productId, index) => {
+  const handleDeleteProduct = (item, index) => {
     let addition = {
-      userId: userId,
-      productId: productId
+      userId: item.userId,
+      productId: item.productId
     }
-    let data = productsInCart
-    data.splice(index, 1)
-    console.log(data)
-    setProductsInCart(data)
-   deleteProductInCart(loginUser.accessToken, addition, axiosJWT)
-    
+    let pros = [...productsInCart]
+    pros.splice(index, 1)
+    setProductsInCart(pros)
+    setTotalIncart(prev => prev - item.quantityAdded)
+    setTotalPriceInCart(prev => prev - item.quantityAdded * item.Product.price) 
+   deleteProductInCart(loginUser.accessToken, addition, axiosJWT, navigate)
+  }
+
+  const handleRedirectToPayment = () => {
+    let _data = [
+      productsInCart,
+       totalIncart,
+      totalPriceInCart
+    ]
+    console.log(_data)
+    dispatch( getPoductsInPayMent(_data))
+    navigate('/payment')
   }
   useEffect(async () => {
     let data = await getProductsInCart(loginUser.accessToken, loginUser.id, axiosJWT);
     setProductsInCart(data);
+    let _totalPriceInCart = data?.reduce( (total, item) => total + item.quantityAdded * item.Product.price, 0) 
+    let _totalIncart = data?.reduce((total, item) => total + item.quantityAdded, 0)
+    setTotalIncart(_totalIncart)
+    setTotalPriceInCart(_totalPriceInCart)
   }, []);
   return (
     <div>
@@ -61,7 +93,7 @@ const Cart = () => {
         </div>
 
         {productsInCart?.map((item, index) => (
-          <div className="row content">
+          <div className="row content" key={index}>
             <div className="col-4">
               <div className="row">
                 <div className="col-6">
@@ -81,32 +113,32 @@ const Cart = () => {
             </div>
             <div className="col-2">
               <p className="quantity">
-                <button onClick={(e) => changeQuantity(-1, index)}>-</button>{" "}
+                <button onClick={(e) => changeQuantity(-1,item , index)}>-</button>{" "}
                 <i> &emsp; {item.quantityAdded} &emsp;</i>
-                <button onClick={(e) => changeQuantity(1, index)}>+</button>
+                <button onClick={(e) => changeQuantity(1,item, index)}>+</button>
               </p>
             </div>
             <div className="col-2">
               <p className="total-price"><i>{item.quantityAdded * item.Product.price}vnđ</i></p>
             </div>
             <div className="col-2">
-              <p className="action" onClick={(e) => handleDeleteProduct(item.userId, item.productId, index)}>Xóa</p>
+              <p className="action" onClick={(e) => handleDeleteProduct(item, index)}>Xóa</p>
             </div>
           </div>
         ))}
         <div className="row">
           <div className="buy-in-cart">
             <span>
-              Tổng thanh toán (10 sản phẩm):{" "}
-              <i className="text-danger">100.000vnđ</i>{" "}
+              Tổng thanh toán ({totalIncart} sản phẩm):{" "}
+              <i className="text-danger">{totalPriceInCart}vnđ</i>{" "}
             </span>
             <button>
-              <Link
-                to="/payment"
+              <span
+                onClick={handleRedirectToPayment}
                 style={{ color: "white", textDecoration: "none" }}
               >
                 <BsCashCoin /> Mua hàng
-              </Link>
+              </span>
             </button>
           </div>
         </div>

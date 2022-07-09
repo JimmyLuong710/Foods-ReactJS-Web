@@ -6,6 +6,7 @@ import {
   registerStart,
   registerSuccess,
   registerFailed,
+  logoutSuccess
 } from "./slice/authSlice";
 import {
   getUsersStart,
@@ -19,7 +20,8 @@ import {
   deleteProductSuccess,
   updateProductSuccess,
   addProductSuccess,
-} from "./slice/userSlice";
+} from "./slice/adminSlice";
+
 
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
@@ -29,7 +31,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     navigate("/");
   } catch (err) {
     dispatch(loginFailed());
-    alert(err?.response.data);
+    alert(err.response?.data);
   }
 };
 
@@ -45,7 +47,22 @@ export const registerUser = async (user, dispatch, navigate) => {
   }
 };
 
-export const getAllUsers = async (accessToken, dispatch, axiosJWT) => {
+export const logoutUser = async (accessToken, axiosJWT,dispatch, navigate) => {
+  try {
+    await axiosJWT.delete('/v1/auth/log-out', {
+      headers: {
+        token: "Bearer " + accessToken,
+      }
+    })
+    dispatch(logoutSuccess())
+    navigate('/')
+  } catch(err) {
+    console.log(err);
+    alert(err.response?.data)
+  }
+}
+
+export const getAllUsers = async (accessToken, dispatch, axiosJWT, navigate) => {
   getUsersStart();
   try {
     const res = await axiosJWT.get("/v1/user/get-all-user", {
@@ -53,9 +70,11 @@ export const getAllUsers = async (accessToken, dispatch, axiosJWT) => {
         token: "Bearer " + accessToken,
       },
     });
+    navigate('/manage-user')
     dispatch(getUsersSuccess(res.data));
   } catch (err) {
     dispatch(getUsersFailed());
+    navigate('/')
   }
 };
 
@@ -196,17 +215,18 @@ export const getProductsByKey = async (key) => {
   }
 };
 
-export const addToCart = async (accessToken, addition, axiosJWT) => {
+export const addToCart = async (accessToken, addition, axiosJWT, navigate) => {
   try {
     await axiosJWT.post("/v1/user/add-to-cart", addition, {
       headers: {
         token: "Bearer " + accessToken
       }
     });
-    alert('Da them vao gio hang')
+    alert('Them vao gio thanh cong')
   } catch (err) {
     console.log(err);
-    alert(err.response?.data);
+     alert(err.response?.data);
+     navigate('/')
   }
 };
 
@@ -237,7 +257,7 @@ export const updateProductInCart = async (accessToken, addition, axiosJWT) => {
       }
 }
 
-export const deleteProductInCart = async (accessToken, addition, axiosJWT) => {
+export const deleteProductInCart = async (accessToken, addition, axiosJWT, navigate) => {
     try {
         await axiosJWT.delete(`/v1/user/delete-product-in-cart?userId=${addition.userId}&productId=${addition.productId}`, {
           headers: {
@@ -247,5 +267,6 @@ export const deleteProductInCart = async (accessToken, addition, axiosJWT) => {
       } catch (err) {
         console.log(err);
         alert(err.response?.data);
+        navigate('/')
       }
 }

@@ -30,8 +30,9 @@ const customStyles = {
 };
 
 const ManageProduct = () => {
+  console.log('this is productmanage')
   let loginUser = useSelector(state => state.auth.login.user)
-  let lisTProducts = useSelector((state) => state.user.products.products);
+  let lisTProducts = useSelector((state) => state.admin.products.products);
   const [selectedFile, setSelectedFile] = useState();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [typeActionModal, setTypeActionModal] = useState();

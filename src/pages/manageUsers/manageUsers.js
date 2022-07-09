@@ -26,9 +26,10 @@ const customStyles = {
 
 const ManageUsers = () => {
   let loginUser = useSelector(state => state.auth.login.user)
-  let listUsers = useSelector(state => state.user.users.users)
+  let listUsers = useSelector(state => state.admin.users.users)
   const [modalIsOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch()
+  let navigate = useNavigate()
   let axiosJWT = createAxiosJWT(loginUser, dispatch,loginSuccess)
 
   let [userInfo, setUserInfo] = useState({
@@ -86,7 +87,7 @@ const ManageUsers = () => {
     }
     if (!userNameM && !emailM && !phoneM && !passwordM) {
       try {
-      await addUser(user,'vinh', dispatch)
+      await addUser(user, loginUser.accessToken,dispatch, axiosJWT)
       setUserInfo({
         userName: '',
         email: '',
@@ -113,7 +114,7 @@ const ManageUsers = () => {
   };
   
   useEffect(() => {
-    getAllUsers(loginUser.accessToken ,dispatch, axiosJWT)
+    getAllUsers(loginUser.accessToken ,dispatch, axiosJWT, navigate)
   }, []);
 
   return (
