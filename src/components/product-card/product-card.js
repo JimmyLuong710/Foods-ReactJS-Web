@@ -1,24 +1,25 @@
 import { Link } from "react-router-dom";
 import './product-card.scss'
 
-const ProductCard = () => {
+const ProductCard = (props) => {
+  let item = props.item
   return (
     <div className="card border-primary card-product">
-      <Link to="/product">
+      <Link to={`/product/${item.id}`}>
         <div className="card__img">
           <img
             className="card-img-top"
-            src={require("../../assets/image/bap-xao.jpg")}
+            src={`http://localhost:8000/${item?.image}`}
             alt=""
           />
         </div>
         <div className="card-body">
-          <h4 className="card__title">thịt chó chấm mắm tôm</h4>
+          <h4 className="card__title">{item?.productName}</h4>
           <p className="card__disciption">
-            giá: <span>2$</span>
+            giá: <span>{item?.price} vnđ</span>
           </p>
           <p className="card__disciption">
-            đã bán: <span>tốt</span>
+            đã bán: <span>10</span>
           </p>
         </div>
         <div className="add-to-cart">

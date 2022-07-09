@@ -11,6 +11,7 @@ const TestFile = () => {
     const onClickHandler = () => {
         const data = new FormData() 
         data.append('file', selectedFile)
+        console.log(data)
         try {
         axios.post("http://localhost:8000/v1/user/add-product", data, { // receive two parameter endpoint url ,form data 
     })

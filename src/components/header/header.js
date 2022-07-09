@@ -5,20 +5,25 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const Header = (props) => {
-  let loggedIn = true
-  //  useSelector((state) => state.auth.login.loggedIn)
+  let loggedIn = useSelector((state) => state.auth.login.loggedIn)
   let user =  useSelector((state) => state.auth.login.user)
+  const [key, setKey] = useState('')
+  const navigate = useNavigate()
  
+  const onKeyChange = (e) => {
+    setKey(e.target.value)
+  }
   const handleSearchKeyDown = (e) => {
     if(e.key === 'Enter') {
-      alert('aloooooo')
+     navigate(`/search/${key}`)
     }
   }
   const handleClickSearchButton = (e) => {
-    alert('allooooo')
+    navigate(`/search/${key}`)
   }
 
   return (
@@ -64,7 +69,10 @@ const Header = (props) => {
               </div>
             </div>
             <div className="search">
-                <input type="text" placeholder="Tìm kiếm mòn ăn"  onKeyDown={(e) => handleSearchKeyDown(e)}/>
+                <input type="text" placeholder="Tìm kiếm mòn ăn" 
+                value={key}
+                onChange={(e) => onKeyChange(e)}
+                onKeyDown={(e) => handleSearchKeyDown(e)}/>
                 <div className="search-icon">
                   <AiOutlineSearch onClick={(e) => handleClickSearchButton(e)}/>
                 </div>

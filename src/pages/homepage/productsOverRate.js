@@ -6,9 +6,10 @@ import { Navigation,FreeMode, Pagination } from "swiper";
 import "./product.scss";
 import "swiper/css/bundle";
 import ProductCard from "../../components/product-card/product-card";
+import { useSelector } from "react-redux";
 
 const ProductsOverRate = () => {
-  let array = [1,2,34,3,32,5,6,3,56,32]
+  let allProduct = useSelector(state => state.user.products.products)
   return (
   <div className="product-overrate">
     <div className="container">
@@ -18,15 +19,14 @@ const ProductsOverRate = () => {
      grabCursor={true}
      spaceBetween={10}
      slidesPerView={'auto'}
-    //  pagination={{
-    //    clickable: true,
-    //  }}
      freeMode={true}
      modules={[Pagination, Navigation, FreeMode]}
    >
-      {array.map((item, index) => (
+      {allProduct?.map((item, index) => (
             <SwiperSlide >
-              <ProductCard />
+              <ProductCard 
+              item = {item}
+              />
             </SwiperSlide >
           ))}
     

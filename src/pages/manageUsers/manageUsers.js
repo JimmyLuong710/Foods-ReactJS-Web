@@ -8,9 +8,10 @@ import Modal from "react-modal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { registerUser } from "../../redux/apiRequests";
 import { useEffect } from "react";
-import { getAllUsers } from "../../redux/apiRequests";
+import { getAllUsers, addUser, deleteUser } from "../../redux/apiRequests";
+import createAxiosJWT from "../../axiosJWT";
+import { loginSuccess } from "../../redux/slice/authSlice";
 
 const customStyles = {
   content: {
@@ -24,13 +25,11 @@ const customStyles = {
 };
 
 const ManageUsers = () => {
+  let loginUser = useSelector(state => state.auth.login.user)
   let listUsers = useSelector(state => state.user.users.users)
-
   const [modalIsOpen, setIsOpen] = useState(false);
-
-  const navigate = useNavigate()
-
   const dispatch = useDispatch()
+  let axiosJWT = createAxiosJWT(loginUser, dispatch,loginSuccess)
 
   let [userInfo, setUserInfo] = useState({
     userName: "",
@@ -86,8 +85,18 @@ const ManageUsers = () => {
       passwordM = "Mật khẩu bạn nhập không trùng nhau";
     }
     if (!userNameM && !emailM && !phoneM && !passwordM) {
-      await registerUser(user, dispatch, navigate)
-      setIsOpen(false);
+      try {
+      await addUser(user,'vinh', dispatch)
+      setUserInfo({
+        userName: '',
+        email: '',
+        phone: '',
+        password: '',
+        cfPassword: ''
+      })
+      } catch(err) {
+        alert(err.response.data)
+      }
     }
 
     setMessage({
@@ -97,11 +106,14 @@ const ManageUsers = () => {
       password: passwordM,
     });
   };
-  const handleUpdateUser = () => {};
-  const handleDeleteUser = () => {};
+  
+  const handleDeleteUser = (item) => {
+    if(item.role === 'admin') alert('không thể xóa admin')
+    else  deleteUser(item.id, loginUser.accessToken, dispatch, axiosJWT)
+  };
   
   useEffect(() => {
-    getAllUsers('vinh',dispatch)
+    getAllUsers(loginUser.accessToken ,dispatch, axiosJWT)
   }, []);
 
   return (
@@ -187,27 +199,27 @@ const ManageUsers = () => {
         <table className="table table-hover text-center">
           <thead>
             <tr>
+              <th>Stt</th>
               <th>Tên đăng nhập</th>
               <th>Email</th>
               <th>Số điện thoại</th>
+              <th>Vai trò</th>
               <th>Thao tác</th>
             </tr>
           </thead>
           <tbody>
             {listUsers?.map((item, index) => (
               <tr key={index}>
+                <td>{index + 1}</td>
                 <td>{item.userName}</td>
                 <td>{item.email}</td>
                 <td>{item.phone}</td>
+                <td>{item.role}</td>
                 <td>
                   {" "}
-                  <GiPencil
-                    className="pencil"
-                    onClick={(e) => handleUpdateUser()}
-                  />
                   <MdDelete
                     className="bin"
-                    onClick={(e) => handleDeleteUser()}
+                    onClick={(e) => handleDeleteUser(item)}
                   />
                 </td>
               </tr>

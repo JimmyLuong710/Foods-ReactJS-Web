@@ -8,9 +8,11 @@ import "swiper/css/bundle";
 import { Link } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
 import ProductCard from "../../components/product-card/product-card";
+import { useSelector } from "react-redux";
 
 const Product = () => {
-  let array = [1, 2, 3, 4, 5, 6];
+ 
+  let allProduct = useSelector(state => state.user.products.products)
   return (
     <div className="new-products">
       <div className="container">
@@ -22,15 +24,14 @@ const Product = () => {
           grabCursor={true}
           spaceBetween={10}
           slidesPerView={"auto"}
-          // pagination={{
-          //   clickable: true,
-          // }}
           freeMode={true}
           modules={[Pagination, Navigation, FreeMode]}
         >
-          {array.map((item, index) => (
+          {allProduct?.map((item, index) => (
             <SwiperSlide >
-              <ProductCard />
+              <ProductCard 
+              item = {item}
+              />
             </SwiperSlide >
           ))}
         </Swiper>
