@@ -9,6 +9,9 @@ import ManageProduct from "../pages/manageProducts/manageProduct";
 import ManageUsers from "../pages/manageUsers/manageUsers"
 import TestFile from "../pages/testFile";
 import Search from "../pages/search/search";
+import HistoryBought from "../pages/historyBought/historyBought";
+import HandleOrdered from "../pages/handleOrdered/handleOrdered";
+
 
 const Routers = () => {
   return (
@@ -24,6 +27,8 @@ const Routers = () => {
         <Route path="/manage-user" element={ <ManageUsers />} />
         <Route path="/search/:key" element={ <Search />} />
         <Route path="/test" element={ <TestFile />} />
+        <Route path="/history" element={ <HistoryBought />} />
+        <Route path="/handle-ordered" element={ <HandleOrdered />} />
       </Routes>
     </BrowserRouter>
   );

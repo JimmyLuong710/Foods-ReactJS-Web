@@ -2,9 +2,74 @@ import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import "./payment.scss";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import createAxiosJWT from "../../axiosJWT";
+import { loginUser } from "../../redux/apiRequests";
+import { loginSuccess } from "../../redux/slice/authSlice";
+import { payProducts } from "../../redux/apiRequests";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Payment = () => {
+  const navigate = useNavigate()
+  let loginUser = useSelector(state => state.auth.login.user)
   let lisTProducts = useSelector(state => state.user.productsInPayMent)
+  let [customerInfo, setCustomerInfo] = useState({
+    name: '',
+    phone: '',
+    address: ''
+  })
+  let [mes, setMes] = useState('')
+ const dispatch = useDispatch()
+ const axiosJWT = createAxiosJWT(loginUser,dispatch,loginSuccess)
+
+
+ const onCustomerInfoChange = (e, key) => {
+  setCustomerInfo({
+    ...customerInfo,
+    [key]: e.target.value
+  })
+ }
+  const handlePayment = () => {
+
+     if(!customerInfo.name || !customerInfo.phone || !customerInfo.address) {
+        setMes('Các mục trên không được để trống')
+        return
+     }
+     if (customerInfo.phone[0] != "0" || !customerInfo.phone.match(/^-?\d+$/) || customerInfo.phone.length !== 10) {
+      setMes('Số điện thoại không hợp lệ')
+      return
+     }
+      let productId = []
+      let quantityOrdered = []
+      let priceEach = []
+      for(let i = 0; i < lisTProducts[0]?.length; i++) {
+        productId.push(lisTProducts[0][i].Product.id)
+        quantityOrdered.push(lisTProducts[0][i].quantityAdded)
+        priceEach.push(lisTProducts[0][i].quantityAdded * lisTProducts[0][i].Product.price)
+      }
+      let data = {
+        userId: loginUser.id,
+        name: customerInfo.name,
+        phone: customerInfo.phone,
+        address: customerInfo.address,
+        productId: productId,
+        quantityOrdered: quantityOrdered,
+        quantityProducts: lisTProducts[0].length,
+        priceEach: priceEach
+      }
+      debugger
+      let type = lisTProducts[3]
+      payProducts(loginUser.accessToken, data, axiosJWT, navigate, type)
+  }
+
+  useEffect( () => {
+    if(!loginUser) {
+      navigate('/')
+      return
+    }
+  },[])
   return (
     <div className="payment">
       <Header />
@@ -26,7 +91,7 @@ const Payment = () => {
               </div>
               </div>
               {lisTProducts[0]?.map((item, index) => (
-                <div className="row content text-center mt-2 mb-2">
+                <div key={index} className="row content text-center mt-2 mb-2">
                   <div className="col-6">
                     <div className="row">
                       <div className="col-6">
@@ -68,7 +133,8 @@ const Payment = () => {
                         type="text"
                         name="name"
                         className="form-control"
-                        required="required"
+                        value={customerInfo.name}
+                        onChange={(e) => onCustomerInfoChange(e, 'name')}
                       />
                     </div>
                   </div>
@@ -80,7 +146,8 @@ const Payment = () => {
                         type="text"
                         name="name"
                         className="form-control"
-                        required="required"
+                        value={customerInfo.phone}
+                        onChange={(e) => onCustomerInfoChange(e, 'phone')}
                       />
                     </div>
                   </div>
@@ -94,7 +161,8 @@ const Payment = () => {
                         type="text"
                         name="name"
                         className="form-control"
-                        required="required"
+                        value={customerInfo.address}
+                        onChange={(e) => onCustomerInfoChange(e, 'address')}
                       />
                     </div>
                   </div>
@@ -106,6 +174,7 @@ const Payment = () => {
                   </div>
                 </div>
               </div>
+              <p className="text-center text-danger">{mes}</p>
             </div>
 
             <div className="">
@@ -115,7 +184,9 @@ const Payment = () => {
                   <i>{lisTProducts[2]}vnđ</i>
                 </strong>
               </span>
-              <button className="btn btn-success">Thanh toán</button>
+              <button className="btn btn-success"
+              onClick={handlePayment}
+              >Thanh toán</button>
             </div>
           </div>
 

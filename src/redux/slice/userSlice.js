@@ -4,7 +4,8 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     productsInPayMent: [],
-    productsInCart: null
+    productsInCart: [],
+    productsInHistory: []
   },
   reducers: {
     getPoductsInPayMent: (state, action) => {
@@ -13,6 +14,9 @@ const userSlice = createSlice({
     },
     getProductsInCart: (state, action) => {
 
+    },
+    getProductsInHistory: (state, action) => {
+      state.getProductsInHistory = action.payload
     }
   },
 });

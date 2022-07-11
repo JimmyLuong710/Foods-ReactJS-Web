@@ -67,7 +67,7 @@ const Header = (props) => {
                         <ul className="user-action">
                           {loginUser.role === "admin" ? (
                             <>
-                              <Link to="/product-pending">
+                              <Link to="/handle-ordered">
                                 <li>Đơn chờ xử lý</li>
                               </Link>
                               <Link to="/manage-user">
@@ -82,8 +82,8 @@ const Header = (props) => {
                               <Link to="/">
                                 <li> Sửa thông tin </li>
                               </Link>
-                              <Link to="/">
-                                <li> Đơn mua </li>
+                              <Link to="/history">
+                                <li> Lịch sử mua </li>
                               </Link>
                             </>
                           )}

@@ -17,6 +17,7 @@ import {
 } from "../../redux/apiRequests";
 import createAxiosJWT from "../../axiosJWT";
 import { loginSuccess } from "../../redux/slice/authSlice";
+import { useNavigate } from "react-router";
 
 const customStyles = {
   content: {
@@ -30,13 +31,13 @@ const customStyles = {
 };
 
 const ManageProduct = () => {
-  console.log('this is productmanage')
   let loginUser = useSelector(state => state.auth.login.user)
   let lisTProducts = useSelector((state) => state.admin.products.products);
   const [selectedFile, setSelectedFile] = useState();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [typeActionModal, setTypeActionModal] = useState();
  const dispatch = useDispatch();
+ const navigate = useNavigate()
   const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess)
 
   let [productInfo, setProductInfo] = useState(
@@ -127,13 +128,19 @@ const ManageProduct = () => {
         },
       );
     } else {
-      await updateProduct(product, loginUser.accessToken, dispatch, axiosJWT);
+      await updateProduct(product, loginUser?.accessToken, dispatch, axiosJWT);
     }
   };
 
-  // useEffect(() => {
-  //   getAllProducts("vinh", dispatch);
-  // }, []);
+  useEffect(() => {
+    if(!loginUser) {
+      if(!loginUser || loginUser?.role !== 'admin') {
+        navigate('/')
+        return
+      }
+    }
+    getAllProducts(dispatch);
+  }, []);
   return (
     <>
       <Header />

@@ -20,7 +20,6 @@ const createAxiosJWT = (user, dispatch, statusUser) => {
           accessToken: res.data,
         };
         dispatch(statusUser(newUser));
-        console.log(res.data)
         config.headers["token"] = "Bearer " + res.data;
       }
       return config;

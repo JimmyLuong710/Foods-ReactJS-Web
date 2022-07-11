@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import { getPoductsInPayMent } from "../../redux/slice/userSlice";
 
 const ProductDetails = () => {
-  console.log('this is product details')
   let red = "red";
   let loginUser = useSelector(state => state.auth.login.user)
   const { id } = useParams();
@@ -53,7 +52,8 @@ const ProductDetails = () => {
       Product: data
       }],
        quantity,
-       data.price * quantity
+       data.price * quantity,
+       'product-detail'
     ]
     dispatch(getPoductsInPayMent(_data))
     navigate('/payment')

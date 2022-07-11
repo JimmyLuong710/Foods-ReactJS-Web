@@ -114,7 +114,11 @@ const ManageUsers = () => {
   };
   
   useEffect(() => {
-    getAllUsers(loginUser.accessToken ,dispatch, axiosJWT, navigate)
+    if(!loginUser) {
+      navigate('/')
+      return
+    }
+    getAllUsers(loginUser?.accessToken ,dispatch, axiosJWT, navigate)
   }, []);
 
   return (

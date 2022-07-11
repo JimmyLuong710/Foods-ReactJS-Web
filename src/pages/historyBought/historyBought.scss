@@ -1,7 +1,7 @@
 
 
 
-.cart {
+.history {
     .title {
         background-color: #e9ecef3d;
         margin: 10px 0;
@@ -9,13 +9,13 @@
     }
     .content {
         background-color: #e9ecef3d;
-        margin: 30px 0 !important;
-        .cart-img-top {
-            height: 130px;
+        margin: 40px 0 !important;
+        box-shadow: 0 0 3px 2px aqua;
+        .history-img-top {
+            height: 100px;
             width: 100%;
             img{
                 object-fit: cover;
-                // overflow: hidden;
                 height: 100%;
             }
         }
@@ -38,23 +38,6 @@
         .action:hover {
             color: red;
             cursor: pointer;
-        }
-    }
-    .buy-in-cart {
-        text-align: right;
-        button {
-            background-color: orange;
-            color: white;
-            border: none;
-            outline: none;
-            padding: 5px 12px;
-            margin: 10px;
-            &:hover {
-                opacity: 0.7;
-            }
-        }
-        i {
-            font-size: 20px;
         }
     }
 }

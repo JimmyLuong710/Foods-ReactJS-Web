@@ -8,7 +8,6 @@ import { registerUser } from "../../redux/apiRequests";
 
 const SignUp = () => {
   const navigate = useNavigate()
-  let userRegister = useSelector(state => state.auth.register)
 
   const dispatch = useDispatch()
 
@@ -26,12 +25,6 @@ const SignUp = () => {
     password: "",
   });
 
-  let user = {
-    userName: userInfo.userName,
-    email: userInfo.email,
-    phone: userInfo.phone,
-    password: userInfo.password
-  }
   const onUserInfoChange = (e, key) => {
     setUserInfo({
       ...userInfo,
@@ -53,13 +46,14 @@ const SignUp = () => {
       emailM = "Địa chỉ email không hợp lệ";
     if (userInfo.phone[0] != "0" || !userInfo.phone.match(/^-?\d+$/) || userInfo.phone.length !== 10)
       phoneM = "số điện thoại không hợp lệ";
-    if (userInfo.password.length <= 5 && !passwordM) {
+    if (userInfo.password?.length <= 5 && !passwordM) {
       passwordM = "Mật khẩu phải dài hơn 5 ký tự";
     } else if (userInfo.password !== userInfo.cfPassword) {
       passwordM = "Mật khẩu bạn nhập không trùng nhau";
     }
     if (!userNameM && !emailM && !phoneM && !passwordM) {
-      await registerUser(user, dispatch, navigate)
+      let user = userInfo
+      await registerUser(user, dispatch, navigate, setUserInfo)
     }
 
     setMessage({

@@ -5,13 +5,11 @@ import axios from 'axios';
 const TestFile = () => {
     const [selectedFile, setSelectedFile] = useState()
     const onChangeHandler = (e) => {
-        console.log(e.target.files[0].name)
         setSelectedFile(e.target.files[0])
     }
     const onClickHandler = () => {
         const data = new FormData() 
         data.append('file', selectedFile)
-        console.log(data)
         try {
         axios.post("http://localhost:8000/v1/user/add-product", data, { // receive two parameter endpoint url ,form data 
     })

@@ -13,7 +13,7 @@ import { getPoductsInPayMent } from "../../redux/slice/userSlice";
 const Cart = () => {
   let loginUser = useSelector((state) => state.auth.login.user);
   const [productsInCart, setProductsInCart] = useState();
-  const [totalIncart, setTotalIncart] = useState();
+  const [totalIncart, setTotalIncart] = useState(0);
   const [totalPriceInCart, setTotalPriceInCart] = useState();
   let dispatch = useDispatch();
   let navigate = useNavigate()
@@ -23,7 +23,7 @@ const Cart = () => {
     let addition = {
       userId: item.userId,
       productId: item.productId,
-      quantityAdded: 0
+      quantityAdded: 0,
     }
     if (change === 1) {
       let pros = [...productsInCart]
@@ -62,16 +62,24 @@ const Cart = () => {
   }
 
   const handleRedirectToPayment = () => {
+    if(totalIncart === 0) {
+      alert('chưa có đơn trong giỏ')
+      return
+    }
     let _data = [
       productsInCart,
        totalIncart,
-      totalPriceInCart
+      totalPriceInCart,
+      'cart'
     ]
-    console.log(_data)
     dispatch( getPoductsInPayMent(_data))
     navigate('/payment')
   }
   useEffect(async () => {
+    if(!loginUser) {
+      navigate('/') 
+      return
+    }
     let data = await getProductsInCart(loginUser.accessToken, loginUser.id, axiosJWT);
     setProductsInCart(data);
     let _totalPriceInCart = data?.reduce( (total, item) => total + item.quantityAdded * item.Product.price, 0) 
@@ -98,7 +106,7 @@ const Cart = () => {
               <div className="row">
                 <div className="col-6">
                   <img
-                    className="card-img-top"
+                    className="cart-img-top"
                     src={`http://localhost:8000/${item.Product.image}`}
                     alt=""
                   />
