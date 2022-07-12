@@ -11,13 +11,13 @@ import ProductCard from "../../components/product-card/product-card";
 import { useSelector } from "react-redux";
 
 const Product = () => {
- 
   let allProduct = useSelector(state => state.admin.products.products)
+
   return (
     <div className="new-products">
       <div className="container">
         <h2>
-          Các món ăn mới hon <span className="badge bg-success">New</span>
+          Các sản phẩm mới cập nhật <span className="badge bg-success">New</span>
         </h2>
         <Swiper
           navigation={true}
@@ -27,13 +27,17 @@ const Product = () => {
           freeMode={true}
           modules={[Pagination, Navigation, FreeMode]}
         >
-          {allProduct?.map((item, index) => (
+          {allProduct?.map((item, index) => 
+            index < 10 ? 
             <SwiperSlide key={index}>
               <ProductCard 
               item = {item}
               />
             </SwiperSlide >
-          ))}
+            : 
+            <>
+            </>
+          )}
         </Swiper>
       </div>
     </div>

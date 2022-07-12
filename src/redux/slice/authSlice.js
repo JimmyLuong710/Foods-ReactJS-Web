@@ -27,8 +27,10 @@ const authSlice = createSlice({
             state.login.loggedIn = true
         },
         loginFailed: (state) => {
+            state.login.user = null
             state.login.error = true
             state.login.pending = false
+            state.login.loggedIn = false
         },
         registerStart: (state) => {
             state.register.pending = true

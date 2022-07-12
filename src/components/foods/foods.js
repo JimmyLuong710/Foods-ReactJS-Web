@@ -8,11 +8,16 @@ const Foods = () => {
          <h2 className="text-center">TẤT CẢ ĐỒ ĂN TẠI NHÀ HÀNG</h2>
          <ul>
             {allProduct?.map( (item, index) => 
-           <li style={{
+            item.type === 'đồ ăn'?
+           <li key={index} style={{
             display: 'inline-block',
             width: '242px',
             margin: '20px 5px'
-           }}> <ProductCard item ={item} /></li>
+           }}> <ProductCard item ={item} />
+           </li>
+           : 
+           <>
+           </>
             )}
             </ul>
        </div>

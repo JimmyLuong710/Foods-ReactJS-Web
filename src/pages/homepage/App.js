@@ -7,13 +7,13 @@ import Members from './member';
 import Footer from '../../components/footer/footer'
 import Foods from '../../components/foods/foods';
 import Drinks from '../../components/drinks/drinks';
+import AllProduct from '../../components/allProducts';
 import { useState, useEffect } from 'react';
 import Nav from './nav';
 import { getAllProducts } from '../../redux/apiRequests';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess } from '../../redux/slice/authSlice';
+import { loginSuccess, loginFailed } from '../../redux/slice/authSlice';
 import createAxiosJWT from '../../axiosJWT';
-
 
 const App = () => {
 
@@ -21,7 +21,7 @@ const App = () => {
 //  let allProduct = useSelector(state => state.user.products.products)
 let user = useSelector(state => state.auth.login.user)
  let dispatch = useDispatch()
- let axiosJWT = createAxiosJWT(user, dispatch, loginSuccess)
+ let axiosJWT = createAxiosJWT(user, dispatch, loginSuccess, loginFailed)
  useEffect( () => {
   getAllProducts(dispatch)
  }, [])
@@ -45,6 +45,9 @@ let user = useSelector(state => state.auth.login.user)
     }
     {activeOn === 'foods' && 
     <Foods />
+    }
+    {activeOn === 'all' && 
+    <AllProduct />
     }
       <Footer />
     </div>

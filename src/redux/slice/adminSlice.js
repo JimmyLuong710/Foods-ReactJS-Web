@@ -55,7 +55,7 @@ const adminSlice = createSlice({
         },
         addProductSuccess: (state, action) => {
             let _products = state.products.products
-            _products.push(action.payload)
+            _products.unshift(action.payload)
             state.products.products = _products
         },
         updateProductSuccess: (state, action) => {

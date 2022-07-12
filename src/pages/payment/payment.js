@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import createAxiosJWT from "../../axiosJWT";
-import { loginUser } from "../../redux/apiRequests";
-import { loginSuccess } from "../../redux/slice/authSlice";
+import { loginSuccess, loginFailed } from "../../redux/slice/authSlice";
 import { payProducts } from "../../redux/apiRequests";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -22,7 +21,7 @@ const Payment = () => {
   })
   let [mes, setMes] = useState('')
  const dispatch = useDispatch()
- const axiosJWT = createAxiosJWT(loginUser,dispatch,loginSuccess)
+ const axiosJWT = createAxiosJWT(loginUser,dispatch,loginSuccess, loginFailed)
 
 
  const onCustomerInfoChange = (e, key) => {

@@ -349,3 +349,25 @@ export const handleOrdered = async (accessToken,data, axiosJWT) => {
     alert(err.response?.data);
   }
 }
+
+export const getQuantitySold = async ( productId) => {
+  try {
+  let res = await Axios.get(`/v1/user/get-quantity-sold/${productId}`)
+  return res.data
+  } catch(err) {
+    console.log(err);
+    alert(err)
+  }
+
+}
+
+export const getProductsBestSell = async () => {
+  try {
+  let res = await Axios.get(`/v1/user/get-product-best-sell`)
+  return res.data
+  } catch(err) {
+    console.log(err);
+    alert(err)
+  }
+
+}

@@ -5,7 +5,7 @@ import "./cart.scss";
 import { BsCashCoin } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import createAxiosJWT from "../../axiosJWT";
-import { loginSuccess } from "../../redux/slice/authSlice";
+import { loginSuccess, loginFailed } from "../../redux/slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsInCart, updateProductInCart, deleteProductInCart } from "../../redux/apiRequests";
 import { getPoductsInPayMent } from "../../redux/slice/userSlice";
@@ -17,7 +17,7 @@ const Cart = () => {
   const [totalPriceInCart, setTotalPriceInCart] = useState();
   let dispatch = useDispatch();
   let navigate = useNavigate()
-  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess);
+  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess, loginFailed);
 
   const changeQuantity = (change, item, index) => {
     let addition = {
@@ -140,9 +140,10 @@ const Cart = () => {
               Tổng thanh toán ({totalIncart} sản phẩm):{" "}
               <i className="text-danger">{totalPriceInCart}vnđ</i>{" "}
             </span>
-            <button>
+            <button
+            onClick={handleRedirectToPayment}
+            >
               <span
-                onClick={handleRedirectToPayment}
                 style={{ color: "white", textDecoration: "none" }}
               >
                 <BsCashCoin /> Mua hàng

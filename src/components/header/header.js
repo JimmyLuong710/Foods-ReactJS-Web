@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/apiRequests";
 import createAxiosJWT from "../../axiosJWT";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../redux/slice/authSlice";
+import { loginSuccess, loginFailed } from "../../redux/slice/authSlice";
 
 const Header = (props) => {
 
@@ -22,7 +22,7 @@ const Header = (props) => {
   const [key, setKey] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess);
+  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess, loginFailed);
 
   const onKeyChange = (e) => {
     setKey(e.target.value);
@@ -65,7 +65,7 @@ const Header = (props) => {
                       <span className="text-capitalize">
                         <FaUserCircle /> {loginUser?.userName}
                         <ul className="user-action">
-                          {loginUser.role === "admin" ? (
+                          {loginUser?.role === "admin" ? (
                             <>
                               <Link to="/handle-ordered">
                                 <li>Đơn chờ xử lý</li>

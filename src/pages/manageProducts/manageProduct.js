@@ -16,7 +16,7 @@ import {
   updateProduct,
 } from "../../redux/apiRequests";
 import createAxiosJWT from "../../axiosJWT";
-import { loginSuccess } from "../../redux/slice/authSlice";
+import { loginSuccess, loginFailed } from "../../redux/slice/authSlice";
 import { useNavigate } from "react-router";
 
 const customStyles = {
@@ -38,7 +38,7 @@ const ManageProduct = () => {
   const [typeActionModal, setTypeActionModal] = useState();
  const dispatch = useDispatch();
  const navigate = useNavigate()
-  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess)
+  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess, loginFailed )
 
   let [productInfo, setProductInfo] = useState(
     {

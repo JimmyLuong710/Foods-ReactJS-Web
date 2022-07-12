@@ -5,22 +5,22 @@ import { useState, useEffect } from "react";
 import { BsCashCoin } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getOneProduct } from "../../redux/apiRequests";
-import { addToCart } from "../../redux/apiRequests";
+import { addToCart, getQuantitySold } from "../../redux/apiRequests";
 import createAxiosJWT from "../../axiosJWT";
-import { loginSuccess } from "../../redux/slice/authSlice";
+import { loginSuccess, loginFailed } from "../../redux/slice/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getPoductsInPayMent } from "../../redux/slice/userSlice";
 
 const ProductDetails = () => {
-  let red = "red";
   let loginUser = useSelector(state => state.auth.login.user)
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
+  const [quantitySold, setQuantitySold] = useState(0);
   let [data, setData] = useState({});
   let dispatch = useDispatch()
   let navigate = useNavigate()
-  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess)
+  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess, loginFailed)
 
 
   const changeQuantity = (change) => {
@@ -60,6 +60,8 @@ const ProductDetails = () => {
   }
   useEffect(async () => {
     let _data = await getOneProduct(id);
+    let _quantitySold = await getQuantitySold(id)
+    if(_quantitySold[0]) setQuantitySold(_quantitySold[0].total)
     setData(_data);
   }, []);
   return (
@@ -80,12 +82,12 @@ const ProductDetails = () => {
                 <strong>mô tả: </strong> <i>{data?.description}</i>{" "}
               </p>
               <p>
-                <strong>số lượng đã bán:</strong> <i>10</i>
+                <strong>số lượng đã bán:</strong> <i>{quantitySold}</i>
               </p>
               <h2>{data?.price} vnđ</h2>
               <p
                 style={{
-                  color: `${red}`,
+                  color: `#20D200`,
                 }}
               >
                 {" "}
@@ -108,8 +110,8 @@ const ProductDetails = () => {
               </p>
             </div>
             <div className="action">
-              <button type="button" className="btn btn-primary">
-                <span onClick={redirectToPayment}>
+              <button type="button" className="btn btn-primary" onClick={redirectToPayment}>
+                <span >
                   <BsCashCoin /> &nbsp; Mua ngay
                 </span>
               </button>

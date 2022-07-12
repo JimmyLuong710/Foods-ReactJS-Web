@@ -16,13 +16,12 @@ const Jumbotron = () => {
         <hr className="my-2" />
         <p>Brings to me alot of foods</p>
         <p className="lead">
-          <a
+          <span
             className="btn btn-primary btn-lg"
-            href="Jumbo action link"
             role="button"
           >
             Let'go
-          </a>
+          </span>
         </p>
       </div>
     </div>

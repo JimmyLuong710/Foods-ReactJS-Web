@@ -3,7 +3,7 @@ import Footer from "../../components/footer/footer";
 import { useEffect, useState } from "react";
 import "./handleOrdered.scss";
 import createAxiosJWT from "../../axiosJWT";
-import { loginSuccess } from "../../redux/slice/authSlice";
+import { loginSuccess, loginFailed } from "../../redux/slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsInHandleOrdered, handleOrdered } from "../../redux/apiRequests";
 import { getPoductsInPayMent } from "../../redux/slice/userSlice";
@@ -14,7 +14,7 @@ const HandleOrdered = () => {
   let loginUser = useSelector((state) => state.auth.login.user);
   let dispatch = useDispatch();
   let navigate = useNavigate();
-  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess);
+  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess, loginFailed);
   const [listProducts, setListProducts] = useState();
 
   const handleConfirm = async (orderStatus, item, index) => {

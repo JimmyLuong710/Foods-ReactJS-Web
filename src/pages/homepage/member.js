@@ -29,9 +29,9 @@ const Members = () => {
               <img src={require("../../assets/image/member1.jpg")} alt="" />
             </div>
             <h4>Lê Xuân Quỳnh</h4>
-            <p>Chức vụ: <span>Leader</span></p>
+            <p>Chức vụ: <span>nhân viên</span></p>
             <p>Tuổi: <span>21</span></p>
-            <p>Đóng góp: <span>100%</span></p>
+            <p>Đóng góp: <span>0%</span></p>
             <p>
               <ImStarEmpty className="star-icon" />
               <ImStarEmpty className="star-icon" />
@@ -49,7 +49,7 @@ const Members = () => {
             <h4>Trần Văn Tư</h4>
             <p>Chức vụ: <span>Nhân viên</span></p>
             <p>Tuổi: <span>22</span></p>
-            <p>Đóng góp: <span>80%</span></p>
+            <p>Đóng góp: <span>0%</span></p>
             <p>
             <ImStarEmpty className="star-icon" />
               <ImStarEmpty className="star-icon" />
@@ -67,7 +67,7 @@ const Members = () => {
             <h4>Trần Qúy Nhất</h4>
             <p>Chức vụ: <span>Collector</span></p>
             <p>Tuổi: <span>21</span></p>
-            <p>Đóng góp: <span>85%</span></p>
+            <p>Đóng góp: <span>0%</span></p>
             <p>
             <ImStarEmpty className="star-icon" />
               <ImStarEmpty className="star-icon" />
@@ -85,7 +85,7 @@ const Members = () => {
             <h4>Dương Văn Tình</h4>
             <p>Chức vụ: <span>Design</span></p>
             <p>Tuổi: <span>21</span></p>
-            <p>Đóng góp: <span>70%</span></p>
+            <p>Đóng góp: <span>0%</span></p>
             <p>
             <ImStarEmpty className="star-icon" />
               <ImStarEmpty className="star-icon" />
@@ -103,25 +103,7 @@ const Members = () => {
             <h4>Lường Văn Vinh</h4>
             <p>Chức vụ: <span>Developer</span></p>
             <p>Tuổi: <span>20</span></p>
-            <p>Đóng góp: <span>75%</span></p>
-            <p>
-            <ImStarEmpty className="star-icon" />
-              <ImStarEmpty className="star-icon" />
-              <ImStarEmpty className="star-icon" />
-              <ImStarEmpty className="star-icon" />
-              <ImStarEmpty className="star-icon" />
-            </p>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-        <div className="item">
-            <div className="avatar">
-              <img src={require("../../assets/image/member5.jpg")} alt="" />
-            </div>
-            <h4>Lường Văn Vinh</h4>
-            <p>Chức vụ: <span>Developer</span></p>
-            <p>Tuổi: <span>20</span></p>
-            <p>Đóng góp: <span>75%</span></p>
+            <p>Đóng góp: <span>100%</span></p>
             <p>
             <ImStarEmpty className="star-icon" />
               <ImStarEmpty className="star-icon" />

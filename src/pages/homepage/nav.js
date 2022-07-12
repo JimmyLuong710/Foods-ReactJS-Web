@@ -6,7 +6,7 @@ const Nav = (props) => {
     let setActiveOn = props.setActiveOn
 
     const handleClickAcitveNav = (key, name) => {
-        let arr = ['','','','']
+        let arr = ['','','','','']
         arr[key] = 'active'
         setActiveOn(name)
         setActive(arr)
@@ -27,11 +27,8 @@ const Nav = (props) => {
                 <li className={active[2]} onClick={(e) => handleClickAcitveNav(2, 'drinks')}>
                   <span> Đồ uống </span>
                 </li>
-                <li>
-                  <span> Bán chạy </span>
-                </li>
-                <li>
-                  <span> Call Me </span>
+                <li className={active[3]} onClick={(e) => handleClickAcitveNav(3, 'all')} >
+                  <span> Tất cả sản phẩm </span>
                 </li>
               </ul>
             </div>

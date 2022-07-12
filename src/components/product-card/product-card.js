@@ -2,14 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import './product-card.scss'
 import createAxiosJWT from "../../axiosJWT";
-import { loginSuccess } from "../../redux/slice/authSlice";
-import { addToCart } from "../../redux/apiRequests";
+import { loginSuccess, loginFailed } from "../../redux/slice/authSlice";
+import { addToCart, getQuantitySold } from "../../redux/apiRequests";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const ProductCard = (props) => {
+  const [quantitySold, setQuantitySold] = useState(0)
   let loginUser = useSelector(state => state.auth.login.user)
   const dispatch = useDispatch()
-  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess)
+  const axiosJWT = createAxiosJWT(loginUser, dispatch, loginSuccess, loginFailed)
   let item = props.item
   const navigate = useNavigate()
   const handleAddToCart = (e) => {
@@ -29,6 +32,11 @@ const ProductCard = (props) => {
   const redirectToProductDetail = () => {
     navigate(`/product/${item.id}`)
   }
+
+  useEffect(async () => {
+    let _quantitySold = await getQuantitySold(item?.id)
+    if(_quantitySold[0]) setQuantitySold(_quantitySold[0]?.total)
+  })
   return (
     <div className="card border-primary card-product">
       <div onClick={redirectToProductDetail}>
@@ -45,7 +53,7 @@ const ProductCard = (props) => {
             giá: <span>{item?.price} vnđ</span>
           </p>
           <p className="card__disciption">
-            đã bán: <span>10</span>
+            đã bán: <span>{quantitySold}</span>
           </p>
         </div>
         <div className="add-to-cart" onClick={(e) => handleAddToCart(e)}>

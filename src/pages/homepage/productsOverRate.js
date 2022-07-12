@@ -7,13 +7,20 @@ import "./product.scss";
 import "swiper/css/bundle";
 import ProductCard from "../../components/product-card/product-card";
 import { useSelector } from "react-redux";
+import { getProductsBestSell } from "../../redux/apiRequests";
+import { useEffect, useState } from "react";
 
 const ProductsOverRate = () => {
-  let allProduct = useSelector(state => state.admin.products.products)
+  // let allProduct = useSelector(state => state.admin.products.products)
+  const [allProduct, setAllProduct] = useState([])
+  useEffect( async () => {
+    let data = await getProductsBestSell()
+    setAllProduct(data)
+  }, [])
   return (
   <div className="product-overrate">
     <div className="container">
-    <h2> sản phẩm được đánh giá cao <span className="badge bg-success">overrate</span></h2>
+    <h2> Sản phẩm bán chạy <span className="badge bg-success">overrate</span></h2>
    <Swiper
      navigation={true}
      grabCursor={true}
@@ -25,7 +32,13 @@ const ProductsOverRate = () => {
       {allProduct?.map((item, index) => (
             <SwiperSlide key={index}>
               <ProductCard 
-              item = {item}
+              item = {{
+                id: item['Product.id'],
+                image: item['Product.image'],
+                price: item['Product.price'],
+                productName: item['Product.productName'],
+              }
+              }
               />
             </SwiperSlide >
           ))}

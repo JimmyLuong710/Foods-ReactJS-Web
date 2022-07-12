@@ -14,6 +14,9 @@ import HandleOrdered from "../pages/handleOrdered/handleOrdered";
 
 
 const Routers = () => {
+//   window.onbeforeunload = function() {
+//     localStorage.clear();
+//  }
   return (
     <BrowserRouter>
       <Routes>

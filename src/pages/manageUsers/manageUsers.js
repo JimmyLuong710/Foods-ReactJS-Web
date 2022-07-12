@@ -11,7 +11,7 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { getAllUsers, addUser, deleteUser } from "../../redux/apiRequests";
 import createAxiosJWT from "../../axiosJWT";
-import { loginSuccess } from "../../redux/slice/authSlice";
+import { loginSuccess, loginFailed } from "../../redux/slice/authSlice";
 
 const customStyles = {
   content: {
@@ -30,7 +30,7 @@ const ManageUsers = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch()
   let navigate = useNavigate()
-  let axiosJWT = createAxiosJWT(loginUser, dispatch,loginSuccess)
+  let axiosJWT = createAxiosJWT(loginUser, dispatch,loginSuccess, loginFailed)
 
   let [userInfo, setUserInfo] = useState({
     userName: "",
