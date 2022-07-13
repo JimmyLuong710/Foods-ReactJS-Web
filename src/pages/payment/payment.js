@@ -96,7 +96,7 @@ const Payment = () => {
                       <div className="col-6">
                         <img
                           className="card-img-top"
-                          src={`http://localhost:8000/${item.Product.image}`}
+                          src={process.env.REACT_APP_BACK_END_URL + '/' + item.Product.image}
                           alt=""
                         />
                       </div>

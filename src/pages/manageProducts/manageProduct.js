@@ -259,7 +259,7 @@ const ManageProduct = () => {
                 <td style={{ width: "5%" }}>{index + 1}</td>
                 <td style={{ width: "25%" }}>
                   <div className="img-product">
-                    <img src={`http://localhost:8000/${item.image}`} />
+                    <img src={process.env.REACT_APP_BACK_END_URL + '/' + item.image} />
                   </div>
                   <p className="product-name"> {item.productName} </p>
                 </td>

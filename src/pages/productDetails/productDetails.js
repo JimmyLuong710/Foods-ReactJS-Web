@@ -71,7 +71,7 @@ const ProductDetails = () => {
         <div className="wrapper row">
           <div className="preview col-md-7">
             <div className="thumbnail">
-              <img src={`http://localhost:8000/${data?.image}`} />
+              <img src={process.env.REACT_APP_BACK_END_URL + '/' + data?.image} />
             </div>
           </div>
           <div className="details col-md-5">

@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const Axios = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: process.env.REACT_APP_BACK_END_URL,
+    // 'https://my-foods-web.herokuapp.com',
     // use withCredentials to allow server save cookie to client when different port between back and front
     withCredentials: true
 })

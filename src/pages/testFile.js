@@ -22,7 +22,7 @@ const TestFile = () => {
         <>
          <input type="file" name="file" onChange={(e) => onChangeHandler(e)}/>
         <button className="btn btn-success btn-block" onClick={onClickHandler}>Upload</button> 
-        <img src="http://localhost:8000/vinh.jpg" />
+        <img src="https://my-foods-web.herokuapp.com/vinh.jpg" />
         </>
     )
 }

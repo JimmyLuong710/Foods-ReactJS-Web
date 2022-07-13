@@ -107,7 +107,7 @@ const HandleOrdered = () => {
                       <div className="col-6 border border-primary">
                         <img
                           className="ordered-img-top"
-                          src={`http://localhost:8000/${it["Product.image"]}`}
+                          src={process.env.REACT_APP_BACK_END_URL + '/' + it["Product.image"]}
                           alt=""
                         />
                       </div>

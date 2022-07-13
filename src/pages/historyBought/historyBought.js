@@ -88,7 +88,7 @@ const HistoryBought = () => {
                       <div className="col-6 border border-primary">
                         <img
                           className="history-img-top"
-                          src={`http://localhost:8000/${item["Product.image"]}`}
+                          src={process.env.REACT_APP_BACK_END_URL + '/' + item["Product.image"]}
                           alt=""
                         />
                       </div>

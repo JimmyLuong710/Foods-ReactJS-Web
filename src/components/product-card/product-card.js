@@ -35,7 +35,8 @@ const ProductCard = (props) => {
 
   useEffect(async () => {
     let _quantitySold = await getQuantitySold(item?.id)
-    if(_quantitySold[0]) setQuantitySold(_quantitySold[0]?.total)
+    if(_quantitySold) 
+      if(_quantitySold[0]) setQuantitySold(_quantitySold[0]?.total)
   })
   return (
     <div className="card border-primary card-product">
@@ -43,7 +44,7 @@ const ProductCard = (props) => {
         <div className="card__img">
           <img
             className="card-img-top"
-            src={`http://localhost:8000/${item?.image}`}
+            src={process.env.REACT_APP_BACK_END_URL + '/' + item?.image}
             alt=""
           />
         </div>

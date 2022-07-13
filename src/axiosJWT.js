@@ -4,7 +4,7 @@ import Axios from "./axios";
 
 const createAxiosJWT = (user, dispatch, loginSuccess, loginFailed) => {
   const instance = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: process.env.REACT_APP_BACK_END_URL,
     // use withCredentials to allow server save cookie to client when different port between back and front
     withCredentials: true,
   });
@@ -13,7 +13,7 @@ const createAxiosJWT = (user, dispatch, loginSuccess, loginFailed) => {
       let accessToken = user.accessToken;
       let date = new Date();
       let decodeToken = jwt_decode(accessToken);
-      if (decodeToken?.exp < date.getTime() / 1000) {
+      if (decodeToken?.exp < date.getTime() / 1000 - 5) {
         try {
         let res = await Axios.post("/v1/auth/refresh");
         let newUser = {
