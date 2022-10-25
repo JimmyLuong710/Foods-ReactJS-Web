@@ -1,7 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import authReducer from './slice/authSlice'
-import adminReducer from './slice/adminSlice'
-import userReducer from './slice/userSlice'
+import authReducer from '../slice/auth.slice'
 import {
     persistStore,
     persistReducer,
@@ -22,18 +20,12 @@ import {
 
   const rootReducer = combineReducers({
     auth: authReducer,
-    // admin: adminReducer,
-    // user: userReducer
 })
-  const persistedReducer = persistReducer(persistConfig, authReducer)
+  const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 
   export const store = configureStore({
-    reducer: {
-        auth: persistedReducer,
-        admin: adminReducer,
-        user: userReducer
-    },
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: {
