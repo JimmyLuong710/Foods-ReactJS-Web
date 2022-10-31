@@ -1,0 +1,12 @@
+.card-sign-up {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    padding: 30px;
+    input {
+        margin: 5px 0;
+    }
+}
+
+.card-sign-up::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}

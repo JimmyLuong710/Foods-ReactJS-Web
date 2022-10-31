@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import store from "../redux/store";
-import reqRefreshToken from "../redux/slice/auth.slice";
+import { reqRefreshToken } from "../redux/slice/auth.slice";
+import { store } from "../redux/store";
 
 export const Axios = axios.create({
   timeout: 15000,
@@ -15,7 +15,7 @@ export const AxiosAuth = axios.create({
 
 AxiosAuth.interceptors.request.use(
   async (config) => {
-    let { accessToken, refreshToken } = localStorage.getItem("account");
+    let { accessToken, refreshToken } = store.getState("auth");
     if (!accessToken) return config;
 
     let date = new Date();
@@ -31,7 +31,7 @@ AxiosAuth.interceptors.request.use(
         },
       };
     }
-    
+
     // request refresh token when access token is expired
     try {
       let { data } = await Axios.post("/auth/refresh-token", refreshToken);

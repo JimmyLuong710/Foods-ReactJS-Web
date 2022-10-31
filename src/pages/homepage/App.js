@@ -1,57 +1,37 @@
-import './App.scss';
-import  Header from '../../components/header/header';
-import Product from './product'
-import Jumbotron from './jumbotron'
-import ProductsOverRate from './productsOverRate'
-import Members from './member';
-import Footer from '../../components/footer/footer'
-import Foods from '../../components/foods/foods';
-import Drinks from '../../components/drinks/drinks';
-import AllProduct from '../../components/allProducts';
-import { useState, useEffect } from 'react';
-import Nav from './nav';
-import { getAllProducts } from '../../redux/apiRequests';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess, loginFailed } from '../../redux/slice/authSlice';
-import createAxiosJWT from '../../axiosJWT';
+import "./App.scss";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
+import { useState } from "react";
+import Nav from "./components/nav";
+import Jumbotron from "./components/jumbotron";
+import AllProduct from "./components/allProducts"
+import ProductsNew from "./components/productsNew";
+import Members from "./components/members";
+import ProductsOverRate from "./components/productsOverRate";
+import Drinks from "./components/drinks";
+import Foods from "./components/foods";
 
 const App = () => {
+  let [activeOn, setActiveOn] = useState("home");
 
- let [activeOn, setActiveOn] = useState('home')
-//  let allProduct = useSelector(state => state.user.products.products)
-let user = useSelector(state => state.auth.login.user)
- let dispatch = useDispatch()
- let axiosJWT = createAxiosJWT(user, dispatch, loginSuccess, loginFailed)
- useEffect( () => {
-  getAllProducts(dispatch)
- }, [])
   return (
-    <div>
-      <Header 
-      />
-      <Nav 
-     setActiveOn = {setActiveOn}
-     />
-      {activeOn === 'home' &&
-    <>
-    <Jumbotron />
-      <Product />
-      <ProductsOverRate />
-      <Members />
-    </>  
-    }
-    {activeOn === 'drinks' && 
-    <Drinks />
-    }
-    {activeOn === 'foods' && 
-    <Foods />
-    }
-    {activeOn === 'all' && 
-    <AllProduct />
-    }
+    <div className="app">
+      <Header />
+      <Nav setActiveOn={setActiveOn} />
+      {activeOn === "home" && (
+        <>
+          <Jumbotron />
+          <ProductsNew />
+          <ProductsOverRate />
+          <Members />
+        </>
+      )}
+      {activeOn === "drinks" && <Drinks />}
+      {activeOn === "foods" && <Foods />}
+      {activeOn === "all" && <AllProduct />}
       <Footer />
     </div>
-  )
-}
+  );
+};
 
 export default App;

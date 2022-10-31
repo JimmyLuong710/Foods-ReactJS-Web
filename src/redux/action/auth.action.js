@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import authAPI from "../../api/auth.api";
 
-export const signIn = createAsyncThunk(
+export const onSignIn = createAsyncThunk(
   "auth/signIn",
   async (credentials, thunkAPI) => {
     try {
-      const {data} = await authAPI.signIn(credentials);
+      const { data } = await authAPI.signIn(credentials);
 
       const account = {
         _id: data._id,
@@ -13,8 +13,8 @@ export const signIn = createAsyncThunk(
         username: data.userName,
         email: data.email,
         accessToken: data.accessToken,
-        refreshToken: data.refreshToken
-      }
+        refreshToken: data.refreshToken,
+      };
       return account;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -22,7 +22,7 @@ export const signIn = createAsyncThunk(
   }
 );
 
-export const signUp = createAsyncThunk(
+export const onSignUp = createAsyncThunk(
   "auth/signUp",
   async (account, thunkAPI) => {
     try {
@@ -34,7 +34,7 @@ export const signUp = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk("auth/logOut", async (_, thunkAPI) => {
+export const onLogOut = createAsyncThunk("auth/logOut", async (_, thunkAPI) => {
   try {
     const response = await authAPI.logOut();
     return response.data;

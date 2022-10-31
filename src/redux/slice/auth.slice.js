@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signIn, signUp, logOut } from "../action/auth.action";
+import { onSignIn, onLogOut, onSignUp } from "../action/auth.action";
 
 const initialState = {
   account: {
@@ -10,7 +10,6 @@ const initialState = {
     accessToken: null,
     refreshToken: null,
   },
-  error: null,
   loading: "idle",
   isLoggedIn: false,
 };
@@ -26,51 +25,49 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // SIGN IN
-      .addCase(signIn.pending, (state, action) => {
-        if (state.loading === "idle") {
-          state.loading = "pending";
-          state.currentRequestId = action.payload;
-        }
+      .addCase(onSignIn.pending, (state, action) => {
+        state.loading = "pending";
+        state.isLoggedIn = false;
       })
-      .addCase(signIn.fulfilled, (state, action) => {
+      .addCase(onSignIn.fulfilled, (state, action) => {
         state.loading = "idle";
         state.isLoggedIn = true;
         state.account = action.payload;
+        // window.location.href = "/";
       })
-      .addCase(signIn.rejected, (state, action) => {
+      .addCase(onSignIn.rejected, (state, action) => {
         state.isLoggedIn = false;
         state.loading = "idle";
-        state.error = action.payload;
+        // window.location.href = "/auth/sign-in";
       })
 
       // SIGN UP
-      .addCase(signUp.pending, (state, action) => {
+      .addCase(onSignUp.pending, (state, action) => {
         state.loading = "pending";
       })
-      .addCase(signUp.fulfilled, (state, action) => {
+      .addCase(onSignUp.fulfilled, (state, action) => {
         state.loading = "idle";
-        state.error = null;
+        // window.location.href = "/auth/sign-in";
       })
-      .addCase(signUp.rejected, (state, action) => {
+      .addCase(onSignUp.rejected, (state, action) => {
         state.loading = "idle";
-        state.error = action.payload;
       })
 
       // LOG OUT
-      .addCase(logOut.pending, (state, action) => {
-        state.loading = 'pending'
+      .addCase(onLogOut.pending, (state, action) => {
+        state.loading = "pending";
       })
-      .addCase(signUp.fulfilled, (state, action) => {
-        state.loading = 'idle'
-        state.error = null
+      .addCase(onLogOut.fulfilled, (state, action) => {
+        state.loading = "idle";
+        window.location.href = "/auth/sign-in";
       })
-      .addCase(signUp.rejected, (state, action) => {
-        state.loading = 'idle'
-        state.isLoggedIn = false
-        state.error = action.payload
+      .addCase(onLogOut.rejected, (state, action) => {
+        state.loading = "idle";
+        state.isLoggedIn = false;
       });
   },
 });
 
 export const { reqRefreshToken } = authSlice.actions;
+
 export default authSlice.reducer;

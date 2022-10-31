@@ -10,8 +10,8 @@ import { AxiosAuth } from "../services/AxiosService";
     return data
  };
 
- const updateProductInCart = async (productId) => {
-    let {data} = await AxiosAuth.post(`/cart/products/${productId}`)
+ const updateProductInCart = async (productId, product) => {
+    let {data} = await AxiosAuth.put(`/cart/${productId}`, product)
     return data
  };
 
