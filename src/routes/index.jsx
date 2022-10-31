@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "../pages/homepage/App";
-import SignUp from "../pages/signUp"
-import ProductDetails from "../pages/productDetails"
-// import Cart from "../pages/cart"
+import SignUp from "../pages/signUp";
+import ProductDetails from "../pages/productDetails";
+import Cart from "../pages/cart";
 // import Payment from "../pages/payment/payment";
 // import Products from "../pages/products/manageProduct";
 // import Accounts from "../pages/accounts"
@@ -10,22 +10,32 @@ import ProductDetails from "../pages/productDetails"
 // import HistoryBought from "../pages/orders/orders";
 // import HandleOrdered from "../pages/orderPending/handleOrdered";
 
-import Login from "../pages/login"
-
+import Login from "../pages/login";
+import { useSelector } from "react-redux";
 
 const Routers = () => {
-//   window.onbeforeunload = function() {
-//     localStorage.clear();
-//  }
+  let auth = useSelector((state) => state.auth);
+
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/auth/sign-in" element={<Login />} />
-      <Route path="/auth/sign-up" element={<SignUp />} />
-      <Route path="/" element={<App />} />
-      <Route path="/products/:productId" element={<ProductDetails />} />
+        <Route path="/auth/sign-in" element={<Login />} />
+        <Route path="/auth/sign-up" element={<SignUp />} />
+        <Route path="/" element={<App />} />
+        <Route path="/products/:productId" element={<ProductDetails />} />
+
+        <Route
+          path="/cart"
+          element={
+            auth.isLoggedIn ? (
+              <Cart />
+            ) : (
+              <Navigate replace to={"/auth/sign-in"} />
+            )
+          }
+        />
+
         {/*
-        <Route path="/cart" element={ <Cart />} />
         <Route path="/payment" element={ <Payment />} />
         <Route path="/manage-product" element={ <Products />} />
         <Route path="/manage-user" element={ <Accounts />} />

@@ -10,19 +10,20 @@ export const Axios = axios.create({
 
 export const AxiosAuth = axios.create({
   timeout: 15000,
-  baseURL: process.env.REACT_APP_BACK_END_URL,
+  baseURL: process.env.REACT_APP_BACK_END_URL + "/api/v1",
 });
 
 AxiosAuth.interceptors.request.use(
   async (config) => {
-    let { accessToken, refreshToken } = store.getState("auth");
+    let { auth } = store.getState("auth");
+    let { accessToken, refreshToken } = auth.account;
     if (!accessToken) return config;
 
     let date = new Date();
     let decodedAccessToken = jwt_decode(accessToken);
 
     // expire access token is valid
-    if (decodedAccessToken?.exp < date.getTime() / 1000) {
+    if (decodedAccessToken?.exp > date.getTime() / 1000) {
       return {
         ...config,
         headers: {
@@ -34,7 +35,7 @@ AxiosAuth.interceptors.request.use(
 
     // request refresh token when access token is expired
     try {
-      let { data } = await Axios.post("/auth/refresh-token", refreshToken);
+      let { data } = await Axios.post("/auth/refresh-token", { refreshToken });
 
       store.dispatch(reqRefreshToken(data.accessToken));
       config.headers["authorization"] = "Bearer " + data.accessToken;

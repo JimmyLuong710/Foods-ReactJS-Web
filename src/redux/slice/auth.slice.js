@@ -7,6 +7,7 @@ const initialState = {
     avatar: null,
     userName: null,
     email: null,
+    role: null,
     accessToken: null,
     refreshToken: null,
   },

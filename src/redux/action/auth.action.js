@@ -10,8 +10,9 @@ export const onSignIn = createAsyncThunk(
       const account = {
         _id: data._id,
         avatar: data.avatar,
-        username: data.userName,
+        userName: data.userName,
         email: data.email,
+        role: data.role,
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
       };

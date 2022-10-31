@@ -6,7 +6,7 @@ import { AxiosAuth } from "../services/AxiosService";
  };
 
  const getCart = async () => {
-    let {data} = await AxiosAuth.post('/cart')
+    let {data} = await AxiosAuth.get('/cart')
     return data
  };
 
@@ -16,7 +16,7 @@ import { AxiosAuth } from "../services/AxiosService";
  };
 
  const deleteProductInCart = async (productId) => {
-    let {data} = await AxiosAuth.post(`/cart/products/${productId}`)
+    let {data} = await AxiosAuth.delete(`/cart/${productId}`)
     return data
  };
 
