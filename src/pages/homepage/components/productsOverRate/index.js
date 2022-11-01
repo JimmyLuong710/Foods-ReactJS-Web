@@ -7,11 +7,19 @@ import "./index.scss";
 import "swiper/css/bundle";
 import ProductCard from "../../../../components/productCard";
 import { useEffect, useState } from "react";
+import productAPI from "../../../../api/product.api";
 
 const ProductsOverRate = () => {
-  // let allProduct = useSelector(state => state.admin.products.products)
-  const [allProduct, setAllProduct] = useState([]);
- 
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      let res = await productAPI.getProducts({ sort: "-quantitySold", limit: 8 });
+      setProducts([...res.docs]);
+    };
+    getProducts();
+  }, []);
+
   return (
     <div className="product-overrate">
       <div className="container">
@@ -27,16 +35,9 @@ const ProductsOverRate = () => {
           freeMode={true}
           modules={[Pagination, Navigation, FreeMode]}
         >
-          {allProduct?.map((item, index) => (
+          {products?.map((product, index) => (
             <SwiperSlide key={index}>
-              <ProductCard
-                item={{
-                  id: item["Product.id"],
-                  image: item["Product.image"],
-                  price: item["Product.price"],
-                  productName: item["Product.productName"],
-                }}
-              />
+              <ProductCard product={product} />
             </SwiperSlide>
           ))}
         </Swiper>

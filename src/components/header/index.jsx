@@ -54,13 +54,13 @@ const Header = () => {
                         <ul className="user-action">
                           {auth.account.role === "admin" ? (
                             <>
-                              <Link to="/admin/orders/pending">
+                              <Link to="/management/orders/pending">
                                 <li>Đơn chờ xử lý</li>
                               </Link>
-                              <Link to="/admin/accounts">
+                              <Link to="/management/accounts">
                                 <li> Quản lý người dùng </li>
                               </Link>
-                              <Link to="/admin/products">
+                              <Link to="/management/products">
                                 <li> Quản lý sản phẩm </li>
                               </Link>
                             </>

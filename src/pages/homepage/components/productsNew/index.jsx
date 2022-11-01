@@ -9,9 +9,15 @@ import ProductCard from "../../../../components/productCard";
 import React, { useState } from "react";
 import productAPI from "../../../../api/product.api"
 import { useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductsNew = () => {
   const [products, setProducts] = useState([])
+
+  const notify = (msg, type) => {
+    toast.success(msg, { type: toast.TYPE[type] });
+  };
 
   const getProducts = async () => {
     try {
@@ -27,6 +33,7 @@ const ProductsNew = () => {
   }, [])
   return (
     <div className="new-products">
+      <ToastContainer />
       <div className="container">
         <h2>
           Các sản phẩm mới cập nhật{" "}
@@ -43,7 +50,7 @@ const ProductsNew = () => {
           {products.map((product, index) =>
             index < 10 ? (
               <SwiperSlide key={index}>
-                <ProductCard product={product} />
+                <ProductCard product={product} notify={notify}/>
               </SwiperSlide>
             ) : (
               <></>

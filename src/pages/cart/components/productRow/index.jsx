@@ -1,23 +1,34 @@
 import "./index.scss";
 import cartAPI from "../../../../api/cart.api";
 import { useState } from "react";
+import castPrice from '../../../../utils/castPrice'
 
-const ProductRow = ({ product, getCart, setTotalProductInCart, setTotalPriceInCart }) => {
-  console.log('row')
+const ProductRow = ({
+  product,
+  getCart,
+  setTotalProductInCart,
+  setTotalPriceInCart,
+  notify,
+}) => {
+  console.log("row");
   const [quantityAdded, setQuantityAdded] = useState(product.quantityAdded);
 
   const changeQuantityAdded = async (amount) => {
     try {
-      if (quantityAdded + amount < 1) return;
+      if (quantityAdded + amount < 1) {
+        notify("Số lượng không thể nhỏ hơn 1", "INFO");
+        return;
+      }
 
       cartAPI.updateProductInCart(product._id, {
         quantityAdded: quantityAdded + amount,
       });
       setQuantityAdded((prev) => prev + amount);
-      setTotalProductInCart(prev => prev + amount)
-      setTotalPriceInCart(prev => prev + amount * product.price)
+      setTotalProductInCart((prev) => prev + amount);
+      setTotalPriceInCart((prev) => prev + amount * product.price);
     } catch (err) {
       console.log(err);
+      notify(err.response?.data, "ERROR");
     }
   };
 
@@ -25,8 +36,10 @@ const ProductRow = ({ product, getCart, setTotalProductInCart, setTotalPriceInCa
     try {
       await cartAPI.deleteProductInCart(product._id);
       getCart();
+      notify("Xóa thành công!");
     } catch (err) {
       console.log(err);
+      notify(err.response?.data, "ERROR");
     }
   };
 
@@ -48,7 +61,7 @@ const ProductRow = ({ product, getCart, setTotalProductInCart, setTotalPriceInCa
       </div>
       <div className="col-2">
         <p className="price">
-          <i>{product?.price}vnđ</i>
+          <i>{castPrice(product?.price)}đ</i>
         </p>
       </div>
       <div className="col-2">
@@ -60,7 +73,7 @@ const ProductRow = ({ product, getCart, setTotalProductInCart, setTotalPriceInCa
       </div>
       <div className="col-2">
         <p className="total-price">
-          <i>{quantityAdded * product?.price}vnđ</i>
+          <i>{castPrice(quantityAdded * product?.price)}đ</i>
         </p>
       </div>
       <div className="col-2">

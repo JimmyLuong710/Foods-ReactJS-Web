@@ -2,12 +2,13 @@ import "./index.scss";
 import ProductRow from "../productRow";
 import { BsCashCoin } from "react-icons/bs";
 import { useState } from "react";
+import castPrice from '../../../../utils/castPrice'
 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const ProductTable = ({ cart, getCart }) => {
-  console.log('table')
+const ProductTable = ({ cart, getCart, notify }) => {
+  console.log("table");
   let navigate = useNavigate();
   const [totalProductInCart, setTotalProductInCart] = useState();
   const [totalPriceInCart, setTotalPriceInCart] = useState();
@@ -25,7 +26,7 @@ const ProductTable = ({ cart, getCart }) => {
       (total, item) => total + item.quantityAdded,
       0
     );
-      // console.log(totalPrice, totalProduct)
+
     setTotalPriceInCart(totalPrice);
     setTotalProductInCart(totalProduct);
   }, [cart]);
@@ -57,14 +58,23 @@ const ProductTable = ({ cart, getCart }) => {
             ...item.product,
             quantityAdded: item.quantityAdded,
           };
-          return <ProductRow key={index} product={product} getCart={getCart} setTotalPriceInCart={setTotalPriceInCart} setTotalProductInCart={setTotalProductInCart}/>;
+          return (
+            <ProductRow
+              key={index}
+              product={product}
+              getCart={getCart}
+              setTotalPriceInCart={setTotalPriceInCart}
+              setTotalProductInCart={setTotalProductInCart}
+              notify={notify}
+            />
+          );
         })}
 
         <div className="row">
           <div className="buy-in-cart">
             <span>
               Tổng thanh toán ({totalProductInCart} sản phẩm):{" "}
-              <i className="text-danger">{totalPriceInCart}vnđ</i>{" "}
+              <i className="text-danger">{castPrice(totalPriceInCart)}đ</i>{" "}
             </span>
             <button onClick={handleRedirectToPayment}>
               <span style={{ color: "white", textDecoration: "none" }}>

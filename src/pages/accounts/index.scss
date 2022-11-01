@@ -17,13 +17,6 @@
                 cursor: pointer;
             }
         }
-        .adduser-form {
-                p {
-                    position: absolute;
-                    top: 0;
-                    color: red !important;
-                }
-        }
     }
     table {
         .pencil {
@@ -36,13 +29,5 @@
             cursor: pointer;
             margin: 0 5px;
         }
-    }
-}
-
-.adduser-form {
-    p {
-        position: absolute;
-        // top: 0;
-        color: red;
     }
 }

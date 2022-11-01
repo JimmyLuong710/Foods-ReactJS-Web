@@ -7,13 +7,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import cartAPI from "../../api/cart.api";
 import productAPI from "../../api/product.api";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import castPrice from "../../utils/castPrice";
+
 
 const ProductDetails = () => {
-  let { auth } = useSelector((state) => state);
+  let auth = useSelector((state) => state.auth);
   const { productId } = useParams();
   const [quantityPicked, setQuantityPicked] = useState(1);
   let [product, setProduct] = useState();
   let navigate = useNavigate();
+  const notify = (msg, type) => {
+    toast.success(msg, {type: toast.TYPE[type]});
+  };
 
   const changeQuantityPicked = (change) => {
     if (change === 1) setQuantityPicked((prev) => prev + 1);
@@ -28,9 +35,11 @@ const ProductDetails = () => {
     }
 
     try {
-      cartAPI.addToCart(productId, quantityPicked);
+     await cartAPI.addToCart(productId, quantityPicked);
+     notify("Đã thêm vào giỏ!", 'SUCCESS')
     } catch (err) {
       console.log(err);
+      notify(err.response?.data, "ERROR")
     }
   };
 
@@ -59,6 +68,7 @@ const ProductDetails = () => {
   return (
     <div className="container product-details">
       <Header />
+      <ToastContainer />
       <div className="card">
         <div className="wrapper row">
           <div className="preview col-md-7">
@@ -79,7 +89,7 @@ const ProductDetails = () => {
               <p>
                 <strong>số lượng đã bán:</strong> <i>{product?.quantitySold}</i>
               </p>
-              <h2>{product?.price} vnđ</h2>
+              <h2>{castPrice(product?.price)}đ</h2>
               <p
                 style={{
                   color: `#20D200`,
@@ -100,7 +110,7 @@ const ProductDetails = () => {
                 <span
                   style={{ color: "red", fontSize: "30px", marginLeft: "20px" }}
                 >
-                  {quantityPicked * product?.price} vnđ
+                  {castPrice(quantityPicked * product?.price)}đ
                 </span>
               </p>
             </div>
