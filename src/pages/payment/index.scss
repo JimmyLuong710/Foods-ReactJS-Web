@@ -1,5 +1,6 @@
 
 .payment {
+   
     .card-blue{
         background-color: #492bc4;
     }
@@ -25,4 +26,9 @@
         border-color: #492bc4;
     }
 
+    .payment-info {
+        label {
+            padding-bottom: 3px;
+        }
+    }
 }

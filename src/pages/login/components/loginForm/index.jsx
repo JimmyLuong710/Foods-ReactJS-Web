@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { onSignIn } from "../../../../redux/action/auth.action";
-import "./loginForm.scss";
+import "./index.scss";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -76,6 +76,9 @@ const LoginForm = () => {
                       </p>
                       <p className="text-center text-muted">
                         Chưa có tài khoản? <Link to="/auth/sign-up">Đăng ký</Link>
+                      </p>
+                      <p className="text-center text-muted">
+                        <Link to="/">Quay về trang chủ</Link>
                       </p>
                     </div>
                   </form>

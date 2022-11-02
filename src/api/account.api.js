@@ -6,7 +6,7 @@ const getAccounts = async (params = {}) => {
 };
 
 export const updateAccount = async (account, accountId) => {
-    let {data} = await AxiosAuth.put(`/accounts/${accountId}`)
+    let {data} = await AxiosAuth.put(`/accounts/${accountId}`, account)
     return data
 };
 

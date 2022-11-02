@@ -1,15 +1,18 @@
 import "./index.scss";
 import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import authAPI from "../../api/auth.api";
+import { onLogOut } from "../../redux/action/auth.action";
 
 const Header = () => {
   let auth = useSelector((state) => state.auth);
   const [key, setKey] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const onKeyChange = (e) => {
     setKey(e.target.value);
@@ -25,7 +28,14 @@ const Header = () => {
     navigate(`/search/${key}`);
   };
 
-  const handleLogout = () => {};
+  const handleLogout = async () => {
+    try {
+      await authAPI.logOut()
+      dispatch(onLogOut())
+   } catch(err) {
+      console.log(err)
+    }
+  };
   return (
     <div className="container">
       <header>
@@ -54,6 +64,9 @@ const Header = () => {
                         <ul className="user-action">
                           {auth.account.role === "admin" ? (
                             <>
+                             <Link to="/account/profile">
+                                <li> Tài khoản của tôi </li>
+                              </Link>
                               <Link to="/management/orders/pending">
                                 <li>Đơn chờ xử lý</li>
                               </Link>
@@ -66,8 +79,8 @@ const Header = () => {
                             </>
                           ) : (
                             <>
-                              <Link to="/">
-                                <li> Sửa thông tin </li>
+                              <Link to="/account/profile">
+                                <li> Tài khoản của tôi </li>
                               </Link>
                               <Link to="/orders">
                                 <li> Lịch sử mua </li>

@@ -22,6 +22,9 @@ const authSlice = createSlice({
     reqRefreshToken: (state, action) => {
       state.account.accessToken = action.payload;
     },
+    updateAccount: (state, action) => {
+      state.account.userName = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -34,7 +37,7 @@ const authSlice = createSlice({
         state.loading = "idle";
         state.isLoggedIn = true;
         state.account = action.payload;
-        // window.location.href = "/";
+        window.location.href = "/";
       })
       .addCase(onSignIn.rejected, (state, action) => {
         state.isLoggedIn = false;
@@ -59,8 +62,10 @@ const authSlice = createSlice({
         state.loading = "pending";
       })
       .addCase(onLogOut.fulfilled, (state, action) => {
+        state.account = initialState.account;
+        state.isLoggedIn = false;
         state.loading = "idle";
-        window.location.href = "/auth/sign-in";
+        // window.location.href = "/auth/sign-in";
       })
       .addCase(onLogOut.rejected, (state, action) => {
         state.loading = "idle";
@@ -69,6 +74,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { reqRefreshToken } = authSlice.actions;
+export const { reqRefreshToken, updateAccount } = authSlice.actions;
 
 export default authSlice.reducer;

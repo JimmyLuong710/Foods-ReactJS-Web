@@ -1,12 +1,12 @@
-import "./signUpForm.scss";
+import "./index.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { onSignUp } from "../../../../redux/action/auth.action";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
   let [account, setAccount] = useState({
     userName: "",
     email: "",
@@ -45,8 +45,8 @@ const SignUpForm = () => {
 
     if (!userNameM && !emailM && !passwordM) {
       let response = await dispatch(onSignUp(account));
-      if(response?.error) {
-        setError(response.payload)
+      if (response?.error) {
+        setError(response.payload);
       }
     }
 

@@ -5,6 +5,8 @@ import ProductDetails from "../pages/productDetails";
 import Cart from "../pages/cart";
 import Accounts from "../pages/accounts";
 import Products from "../pages/products";
+import Payment from "../pages/payment";
+import Account from "../pages/account";
 
 // import Search from "../pages/search/search";
 // import HistoryBought from "../pages/orders/orders";
@@ -22,8 +24,18 @@ const Routers = () => {
         <Route path="/auth/sign-in" element={<Login />} />
         <Route path="/auth/sign-up" element={<SignUp />} />
         <Route path="/" element={<App />} />
-        <Route path="/products/:productId" element={<ProductDetails />} />
 
+        <Route path="/products/:productId" element={<ProductDetails />} />
+        <Route
+          path="/account/:field"
+          element={
+            auth.isLoggedIn ? (
+              <Account />
+            ) : (
+              <Navigate replace to={"/auth/sign-in"} />
+            )
+          }
+        />
         <Route
           path="/cart"
           element={
@@ -54,7 +66,12 @@ const Routers = () => {
             )
           }
         />
-
+        <Route
+          path="/payment/:paymentType"
+          element={
+            auth.isLoggedIn ? <Payment /> : <Navigate replace to={"/"} />
+          }
+        />
         {/*
         <Route path="/payment" element={ <Payment />} />
        

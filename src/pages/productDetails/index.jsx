@@ -49,7 +49,7 @@ const ProductDetails = () => {
       return;
     }
 
-    navigate("/order/products/:productId");
+    navigate(`/payment/product?productId=${productId}&quantity=${quantityPicked}`);
   };
 
   useEffect(() => {

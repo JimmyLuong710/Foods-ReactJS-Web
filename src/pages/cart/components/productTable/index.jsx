@@ -14,7 +14,7 @@ const ProductTable = ({ cart, getCart, notify }) => {
   const [totalPriceInCart, setTotalPriceInCart] = useState();
 
   const handleRedirectToPayment = () => {
-    navigate(`/order/cart/${cart._id}`);
+    navigate(`/payment/cart`);
   };
 
   useEffect(() => {
