@@ -1,4 +1,4 @@
-import castPrice from "../../../utils/castPrice";
+import castPrice from "../../../../utils/castPrice";
 
 const PaymentCard = ({ totalCost }) => {
   return (

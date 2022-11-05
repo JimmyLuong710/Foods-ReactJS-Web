@@ -1,6 +1,5 @@
 import Modal from "react-modal";
 import "./index.scss";
-import { useState } from "react";
 
 const customStyles = {
   content: {

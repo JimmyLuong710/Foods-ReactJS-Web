@@ -1,16 +1,28 @@
+import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import accountAPI from "../../../../api/account.api";
+import PopupConfirm from "../../../../components/popupConfirm";
 
 const AccountTable = ({ accounts, notify, getAccounts }) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [accountIdPicked, setAccountIdPicked] = useState("");
 
-  const handleDeleteAccount = async (accountId) => {
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleDeleteAccount = async () => {
     try {
-      await accountAPI.deleteAccount(accountId);
-      getAccounts()
-      notify("Xóa tài khoản thành công!")
-    } catch(err) {
-      console.log(err)
-      notify(err.response?.data, "ERROR")
+      await accountAPI.deleteAccount(accountIdPicked);
+      getAccounts();
+      notify("Xóa tài khoản thành công!");
+    } catch (err) {
+      console.log(err);
+      notify(err.response?.data, "ERROR");
     }
   };
 
@@ -36,12 +48,22 @@ const AccountTable = ({ accounts, notify, getAccounts }) => {
               {" "}
               <MdDelete
                 className="bin"
-                onClick={(e) => handleDeleteAccount(account._id)}
+                onClick={(e) => {
+                  setAccountIdPicked(account._id);
+                  openPopup();
+                }}
               />
             </td>
           </tr>
         ))}
       </tbody>
+      {isPopupOpen && (
+        <PopupConfirm
+          message={"Bạn có chắc muốn xóa tài khoản này không?"}
+          closePopup={closePopup}
+          handleAction={handleDeleteAccount}
+        />
+      )}
     </table>
   );
 };

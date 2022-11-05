@@ -1,6 +1,6 @@
 import Modal from "react-modal";
 import "./index.scss";
-import addressAPI from "../../../api/address.api";
+import addressAPI from "../../../../api/address.api";
 import { useState } from "react";
 
 const customStyles = {
@@ -27,9 +27,7 @@ const AddressModal = ({ isModalOpened, closeModal, notify, getAddresses }) => {
 
   const handleAddAddress = async () => {
     let errMsgName = address.name ? "" : "Tên không được để trống";
-    let errMsgPhone = address.phone
-      ? ""
-      : "Số điện thoại không được để trống";
+    let errMsgPhone = address.phone ? "" : "Số điện thoại không được để trống";
     let errMsgAddress = address.address ? "" : "Địa chỉ không được để trống";
 
     if (
@@ -52,7 +50,7 @@ const AddressModal = ({ isModalOpened, closeModal, notify, getAddresses }) => {
       await addressAPI.addAddress(address);
       notify("Thêm địa chỉ thành công!");
       getAddresses();
-      closeModal()
+      closeModal();
     } catch (err) {
       console.log(err);
       notify(err.response?.data, "ERROR");

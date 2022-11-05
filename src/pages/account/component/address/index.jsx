@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import "./index.scss";
 import AddressModal from "../addressModal";
-import addressAPI from "../../../api/address.api";
+import addressAPI from "../../../../api/address.api";
 
 const Address = ({ notify }) => {
   const [addresses, setAddresses] = useState([]);

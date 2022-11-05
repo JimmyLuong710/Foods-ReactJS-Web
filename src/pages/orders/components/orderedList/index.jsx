@@ -1,6 +1,5 @@
-import { useState } from "react";
 import "./index.scss";
-import castPrice from "../../../utils/castPrice";
+import castPrice from "../../../../utils/castPrice";
 import moment from "moment";
 
 const calculateTotalCost = (products) => {
@@ -19,7 +18,10 @@ const OrderTable = ({ orders }) => {
         return (
           <div className="row order-row" key={index}>
             <div className="order-status">
-              <span className="order-date">Đặt vào lúc: {moment(order.orderDate).format('DD-MM-YYYY HH:MM')}</span>
+              <span className="order-date">
+                Đặt vào lúc:{" "}
+                {moment(order.orderDate).format("DD-MM-YYYY HH:MM")}
+              </span>
               <p>{order.status}</p>
             </div>
 
@@ -46,7 +48,10 @@ const OrderTable = ({ orders }) => {
                 </div>
               );
             })}
-            <div className="total-cost">Tổng tiền: <span>{castPrice(calculateTotalCost(order.products))}đ</span></div>
+            <div className="total-cost">
+              Tổng tiền:{" "}
+              <span>{castPrice(calculateTotalCost(order.products))}đ</span>
+            </div>
             <div className="order-action">
               <button>Liên hệ người bán</button>
             </div>

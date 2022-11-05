@@ -1,7 +1,7 @@
 import "./index.scss";
 import { useEffect, useState } from "react";
 import PickingAddress from "../pickingAddress";
-import addressAPI from "../../../api/address.api";
+import addressAPI from "../../../../api/address.api";
 
 const PaymentInfo = ({ setAddressId }) => {
   const [isPickingAddressOpened, setIsPickingAddressOpened] = useState(false);

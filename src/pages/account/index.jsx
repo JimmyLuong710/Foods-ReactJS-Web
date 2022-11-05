@@ -1,10 +1,10 @@
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import Profile from "./profile";
-import Address from "./address";
-import ForgotPw from "./forgotPw";
+import Profile from "./component/profile";
+import Address from "./component/address";
+import ForgotPw from "./component/forgotPw";
 import { useSelector } from "react-redux";
-import SideBar from "./sideBar";
+import SideBar from "./component/sideBar";
 import "./index.scss";
 import { useParams } from "react-router";
 import { toast, ToastContainer } from "react-toastify";

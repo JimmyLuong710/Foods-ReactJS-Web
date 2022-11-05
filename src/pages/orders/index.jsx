@@ -2,7 +2,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
 import "./index.scss";
-import OrderList from "./orderedList";
+import OrderList from "./components/orderedList";
 import orderAPI from "../../api/order.api";
 
 const Orders = () => {

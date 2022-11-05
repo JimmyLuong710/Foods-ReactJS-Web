@@ -2,11 +2,24 @@ import { GiPencil } from "react-icons/gi";
 import { MdDelete } from "react-icons/md";
 import productAPI from "../../../../api/product.api";
 import castPrice from "../../../../utils/castPrice";
+import { useState } from "react";
+import PopupConfirm from "../../../../components/popupConfirm";
 
 const ProductTable = ({ products, openProductModal, getProducts, notify }) => {
-  const handleDeleteProduct = async (productId) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [productIdPicked, setProductIdPicked] = useState("");
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleDeleteProduct = async () => {
     try {
-      await productAPI.deleteProduct(productId);
+      await productAPI.deleteProduct(productIdPicked);
       notify("Xóa sản phẩm thành công!");
       getProducts();
     } catch (err) {
@@ -52,12 +65,22 @@ const ProductTable = ({ products, openProductModal, getProducts, notify }) => {
               />
               <MdDelete
                 className="bin"
-                onClick={(e) => handleDeleteProduct(product._id)}
+                onClick={(e) => {
+                  setProductIdPicked(product._id);
+                  openPopup();
+                }}
               />
             </td>
           </tr>
         ))}
       </tbody>
+      {isPopupOpen && (
+        <PopupConfirm
+          message={"Bạn có chắc muốn xóa sản phẩm này không?"}
+          closePopup={closePopup}
+          handleAction={handleDeleteProduct}
+        />
+      )}
     </table>
   );
 };
