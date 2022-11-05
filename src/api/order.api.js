@@ -21,8 +21,8 @@ export const getOrderPending = async (params) => {
     return data;
 };
 
-export const handleOrder = async (orderId) => {
-  let { data } = await AxiosAuth.put(`/orders/${orderId}`);
+export const handleOrder = async (orderId, status) => {
+  let { data } = await AxiosAuth.put(`/orders/${orderId}`, {status});
   return data;
 };
 

@@ -10,16 +10,16 @@ const calculateTotalCost = (products) => {
   return total;
 };
 
-const OrderTable = ({ orders }) => {
+const OrderList = ({ orders }) => {
   return (
     <div className="container orders">
-      <h3 className="text-uppercase text-center mb-5"> lịch sử đặt món</h3>
+      <h3 className="text-uppercase text-center mt-5 mb-2"> lịch sử đặt món</h3>
       {orders.map((order, index) => {
         return (
           <div className="row order-row" key={index}>
             <div className="order-status">
               <span className="order-date">
-                Đặt vào lúc:{" "}
+              {index + 1}. &nbsp; Đặt vào lúc:{" "}
                 {moment(order.orderDate).format("DD-MM-YYYY HH:MM")}
               </span>
               <p>{order.status}</p>
@@ -62,4 +62,4 @@ const OrderTable = ({ orders }) => {
   );
 };
 
-export default OrderTable;
+export default OrderList;

@@ -8,11 +8,10 @@ import Products from "../pages/products";
 import Payment from "../pages/payment";
 import Account from "../pages/account";
 import Orders from "../pages/orders";
+import OrdersPending from "../pages/orderPending";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Search from "../pages/search/search";
-
-// import HandleOrdered from "../pages/orderPending/handleOrdered";
 
 import Login from "../pages/login";
 import { useSelector } from "react-redux";
@@ -87,13 +86,20 @@ const Routers = () => {
           path="/orders"
           element={auth.isLoggedIn ? <Orders /> : <Navigate replace to={"/"} />}
         />
+        <Route
+          path="/management/orders/pending"
+          element={
+            auth.account.role === "admin" ? (
+              <OrdersPending notify={notify} />
+            ) : (
+              <Navigate replace to={"/"} />
+            )
+          }
+        />
         {/*
-        <Route path="/payment" element={ <Payment />} />
-       
-       
+        
         <Route path="/search/:key" element={ <Search />} />
-       
-        <Route path="/handle-ordered" element={ <HandleOrdered />} /> */}
+        */}
       </Routes>
     </BrowserRouter>
   );
