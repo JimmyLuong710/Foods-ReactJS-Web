@@ -7,7 +7,7 @@ import Accounts from "../pages/accounts";
 import Products from "../pages/products";
 import Payment from "../pages/payment";
 import Account from "../pages/account";
-import Orders from "../pages/orders/orders";
+import Orders from "../pages/orders";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Search from "../pages/search/search";
@@ -83,15 +83,9 @@ const Routers = () => {
             )
           }
         />
-         <Route
+        <Route
           path="/orders"
-          element={
-            auth.isLoggedIn ? (
-              <Orders />
-            ) : (
-              <Navigate replace to={"/"} />
-            )
-          }
+          element={auth.isLoggedIn ? <Orders /> : <Navigate replace to={"/"} />}
         />
         {/*
         <Route path="/payment" element={ <Payment />} />

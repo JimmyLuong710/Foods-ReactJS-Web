@@ -7,10 +7,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import cartAPI from "../../api/cart.api";
 import productAPI from "../../api/product.api";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import castPrice from "../../utils/castPrice";
-
 
 const ProductDetails = () => {
   let auth = useSelector((state) => state.auth);
@@ -19,7 +18,7 @@ const ProductDetails = () => {
   let [product, setProduct] = useState();
   let navigate = useNavigate();
   const notify = (msg, type) => {
-    toast.success(msg, {type: toast.TYPE[type]});
+    toast.success(msg, { type: toast.TYPE[type] });
   };
 
   const changeQuantityPicked = (change) => {
@@ -35,11 +34,11 @@ const ProductDetails = () => {
     }
 
     try {
-     await cartAPI.addToCart(productId, quantityPicked);
-     notify("Đã thêm vào giỏ!", 'SUCCESS')
+      await cartAPI.addToCart(productId, quantityPicked);
+      notify("Đã thêm vào giỏ!", "SUCCESS");
     } catch (err) {
       console.log(err);
-      notify(err.response?.data, "ERROR")
+      notify(err.response?.data, "ERROR");
     }
   };
 
@@ -49,7 +48,9 @@ const ProductDetails = () => {
       return;
     }
 
-    navigate(`/payment/product?productId=${productId}&quantity=${quantityPicked}`);
+    navigate(
+      `/payment/product?productId=${productId}&quantity=${quantityPicked}`
+    );
   };
 
   useEffect(() => {
@@ -66,77 +67,86 @@ const ProductDetails = () => {
   }, [productId]);
 
   return (
-    <div className="container product-details">
+    <>
       <Header />
       <ToastContainer />
-      <div className="card">
-        <div className="wrapper row">
-          <div className="preview col-md-7">
-            <div className="thumbnail">
-              <img
-                src={process.env.REACT_APP_BACK_END_URL + "/" + product?.image}
-                alt="product"
-              />
+      <div className="container product-details">
+        <div className="card">
+          <div className="wrapper row">
+            <div className="preview col-md-7">
+              <div className="thumbnail">
+                <img
+                  src={
+                    process.env.REACT_APP_BACK_END_URL + "/" + product?.image
+                  }
+                  alt="product"
+                />
+              </div>
             </div>
-          </div>
-          <div className="details col-md-5">
-            <div className="description">
-              <h3> {product?.productName} </h3>
-              <p>
-                {" "}
-                <strong>mô tả: </strong> <i>{product?.description}</i>{" "}
-              </p>
-              <p>
-                <strong>số lượng đã bán:</strong> <i>{product?.quantitySold}</i>
-              </p>
-              <h2>{castPrice(product?.price)}đ</h2>
-              <p
-                style={{
-                  color: `#20D200`,
-                }}
-              >
-                {" "}
-                <i>{product?.status}</i>
-              </p>
-              <p>
-                <strong>số lượng: &emsp; </strong>{" "}
-                <button onClick={(e) => changeQuantityPicked(-1)}>-</button>{" "}
-                <i> &emsp; {quantityPicked} &emsp;</i>
-                <button onClick={(e) => changeQuantityPicked(1)}>+</button>
-              </p>
-              <p>
-                {" "}
-                <strong>Tổng tiền:</strong>{" "}
-                <span
-                  style={{ color: "red", fontSize: "30px", marginLeft: "20px" }}
+            <div className="details col-md-5">
+              <div className="description">
+                <h3> {product?.productName} </h3>
+                <p>
+                  {" "}
+                  <strong>mô tả: </strong> <i>{product?.description}</i>{" "}
+                </p>
+                <p>
+                  <strong>số lượng đã bán:</strong>{" "}
+                  <i>{product?.quantitySold}</i>
+                </p>
+                <h2>{castPrice(product?.price)}đ</h2>
+                <p
+                  style={{
+                    color: `#20D200`,
+                  }}
                 >
-                  {castPrice(quantityPicked * product?.price)}đ
-                </span>
-              </p>
-            </div>
-            <div className="action">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={orderProduct}
-              >
-                <span>
-                  <BsCashCoin /> &nbsp; Mua ngay
-                </span>
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleAddToCart}
-              >
-                Thêm vào giỏ
-              </button>
+                  {" "}
+                  <i>{product?.status}</i>
+                </p>
+                <p>
+                  <strong>số lượng: &emsp; </strong>{" "}
+                  <button onClick={(e) => changeQuantityPicked(-1)}>-</button>{" "}
+                  <i> &emsp; {quantityPicked} &emsp;</i>
+                  <button onClick={(e) => changeQuantityPicked(1)}>+</button>
+                </p>
+                <p>
+                  {" "}
+                  <strong>Tổng tiền:</strong>{" "}
+                  <span
+                    style={{
+                      color: "red",
+                      fontSize: "30px",
+                      marginLeft: "20px",
+                    }}
+                  >
+                    {castPrice(quantityPicked * product?.price)}đ
+                  </span>
+                </p>
+              </div>
+              <div className="action">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={orderProduct}
+                >
+                  <span>
+                    <BsCashCoin /> &nbsp; Mua ngay
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleAddToCart}
+                >
+                  Thêm vào giỏ
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 };
 
