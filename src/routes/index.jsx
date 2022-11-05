@@ -7,9 +7,11 @@ import Accounts from "../pages/accounts";
 import Products from "../pages/products";
 import Payment from "../pages/payment";
 import Account from "../pages/account";
-
+import Orders from "../pages/orders/orders";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import Search from "../pages/search/search";
-// import HistoryBought from "../pages/orders/orders";
+
 // import HandleOrdered from "../pages/orderPending/handleOrdered";
 
 import Login from "../pages/login";
@@ -18,8 +20,13 @@ import { useSelector } from "react-redux";
 const Routers = () => {
   let auth = useSelector((state) => state.auth);
 
+  const notify = (msg, type = "SUCCESS") => {
+    toast.success(msg, { type: toast.TYPE[type] });
+  };
+
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/auth/sign-in" element={<Login />} />
         <Route path="/auth/sign-up" element={<SignUp />} />
@@ -69,7 +76,21 @@ const Routers = () => {
         <Route
           path="/payment/:paymentType"
           element={
-            auth.isLoggedIn ? <Payment /> : <Navigate replace to={"/"} />
+            auth.isLoggedIn ? (
+              <Payment notify={notify} />
+            ) : (
+              <Navigate replace to={"/"} />
+            )
+          }
+        />
+         <Route
+          path="/orders"
+          element={
+            auth.isLoggedIn ? (
+              <Orders />
+            ) : (
+              <Navigate replace to={"/"} />
+            )
           }
         />
         {/*
@@ -77,7 +98,7 @@ const Routers = () => {
        
        
         <Route path="/search/:key" element={ <Search />} />
-        <Route path="/history" element={ <HistoryBought />} />
+       
         <Route path="/handle-ordered" element={ <HandleOrdered />} /> */}
       </Routes>
     </BrowserRouter>

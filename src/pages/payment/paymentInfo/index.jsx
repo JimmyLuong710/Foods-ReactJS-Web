@@ -1,69 +1,56 @@
-import { useState } from "react";
+import "./index.scss";
+import { useEffect, useState } from "react";
+import PickingAddress from "../pickingAddress";
+import addressAPI from "../../../api/address.api";
 
-const PaymentInfo = () => {
-  let [customerInfo, setCustomerInfo] = useState({
-    name: "",
-    phone: "",
-    address: "",
-  });
-  const onCustomerInfoChange = (e, key) => {
-    setCustomerInfo({
-      ...customerInfo,
-      [key]: e.target.value,
-    });
+const PaymentInfo = ({ setAddressId }) => {
+  const [isPickingAddressOpened, setIsPickingAddressOpened] = useState(false);
+  const [addresses, setAddresses] = useState([]);
+  const [address, setAddress] = useState();
+
+  const closePickingAddress = () => {
+    setIsPickingAddressOpened(false);
   };
 
+  const openPickingAddress = () => {
+    setIsPickingAddressOpened(true);
+  };
+
+  const getAddresses = async () => {
+    let _addresses = await addressAPI.getAddresses();
+    setAddresses([..._addresses]);
+  };
+
+  useEffect(() => {
+    getAddresses();
+    setAddressId(address?._id);
+  }, [address, setAddressId]);
   return (
     <div className="mt-4 mb-4 payment-info">
-      <div className="row mt-3">
-        <h6 className="text-uppercase">Thông tin thanh toán</h6>
-        <div className="col-md-6">
-          <div className="inputbox mt-3">
-            <label> Tên khi nhận hàng:</label>
-            <input
-              type="text"
-              name="name"
-              className="form-control"
-              value={"saigon"}
-               // onChange={(e) => onCustomerInfoChange(e, "name")}
-            />
-          </div>
-        </div>
-
-        <div className="col-md-6">
-          <div className="inputbox mt-3">
-            <label>Số điện thoại</label>
-            <input
-              type="text"
-              name="name"
-              className="form-control"
-              value={"sonla"}
-            //   onChange={(e) => onCustomerInfoChange(e, "phone")}
-            />
-          </div>
-        </div>
+      <h5 className="text-uppercase mb-2">Thông tin thanh toán</h5>
+      <div className="btn-pick-address">
+        <button onClick={openPickingAddress}>Chọn địa chỉ nhận hàng</button>
+        {isPickingAddressOpened && (
+          <PickingAddress
+            isPickingAddressOpened={isPickingAddressOpened}
+            closePickingAddress={closePickingAddress}
+            addresses={addresses}
+            setAddress={setAddress}
+          />
+        )}
       </div>
-
-      <div className="row mt-2">
-        <div className="col-md-6">
-          <div className="inputbox mt-3">
-            <label>Địa chỉ</label>
-            <input
-              type="text"
-              name="name"
-              className="form-control"
-              value={"hanoi"}
-            //   onChange={(e) => onCustomerInfoChange(e, "address")}
-            />
+      {address && (
+        <div className="address-info">
+          <h5>Địa chỉ nhận hàng:</h5>
+          <div className="address-detail">
+            <h5>
+              {address?.name} 
+            </h5>
+            <span className="mb-0">{address?.phone}</span>
+            <p>{address?.address}</p>
           </div>
         </div>
-
-        <div className="col-md-6">
-          <p className="mt-5">
-            Phương thức thanh toàn: <i>Tiền mặt</i>
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

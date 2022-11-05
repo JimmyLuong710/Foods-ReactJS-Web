@@ -4,12 +4,13 @@ import Footer from "../../components/footer";
 import { useState } from "react";
 import Nav from "./components/nav";
 import Jumbotron from "./components/jumbotron";
-import AllProduct from "./components/allProducts"
+import AllProduct from "./components/allProducts";
 import ProductsNew from "./components/productsNew";
 import Members from "./components/members";
 import ProductsOverRate from "./components/productsOverRate";
 import Drinks from "./components/drinks";
 import Foods from "./components/foods";
+import PopupConfirm from "../../components/popupConfirm";
 
 const App = () => {
   let [activeOn, setActiveOn] = useState("home");

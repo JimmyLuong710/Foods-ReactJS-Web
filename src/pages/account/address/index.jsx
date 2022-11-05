@@ -1,21 +1,31 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import "./index.scss";
+import AddressModal from "../addressModal";
 import addressAPI from "../../../api/address.api";
 
-const Address = ({notify}) => {
+const Address = ({ notify }) => {
   const [addresses, setAddresses] = useState([]);
+  const [isModalOpened, setIsModalOpened] = useState(false);
+
+  const closeModal = () => {
+    setIsModalOpened(false);
+  };
+
+  const openModal = () => {
+    setIsModalOpened(true);
+  };
 
   const handleDeleteAddress = async (addressId) => {
     try {
-        await addressAPI.deleteAddress(addressId)
-        notify("Xóa thành công!")
-        getAddresses()
-    } catch(err) {
-        console.log(err)
-        notify(err.response.data, "ERROR")
+      await addressAPI.deleteAddress(addressId);
+      notify("Xóa thành công!");
+      getAddresses();
+    } catch (err) {
+      console.log(err);
+      notify(err.response.data, "ERROR");
     }
-  }
+  };
 
   const getAddresses = async () => {
     let _addresses = await addressAPI.getAddresses();
@@ -27,9 +37,17 @@ const Address = ({notify}) => {
   }, []);
   return (
     <div className="address col-9">
+      {isModalOpened && (
+        <AddressModal
+          isModalOpened={isModalOpened}
+          closeModal={closeModal}
+          notify={notify}
+          getAddresses={getAddresses}
+        />
+      )}
       <div className="title">
         <h4>Địa chỉ của tôi</h4>
-        <button>+ Thêm địa chỉ mới</button>
+        <button onClick={openModal}>+ Thêm địa chỉ mới</button>
       </div>
       <div className="address__content">
         <h5 className="mt-3">Địa chỉ</h5>
@@ -41,7 +59,9 @@ const Address = ({notify}) => {
               <p style={{ maxWidth: "300px" }}>{address.address}</p>
               <div className="action">
                 <span>Cập nhật</span>
-                <span onClick={(e) => handleDeleteAddress(address._id)}>Xóa</span>
+                <span onClick={(e) => handleDeleteAddress(address._id)}>
+                  Xóa
+                </span>
               </div>
             </div>
           );

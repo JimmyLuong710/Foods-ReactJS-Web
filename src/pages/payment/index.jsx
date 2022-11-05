@@ -3,8 +3,6 @@ import Footer from "../../components/footer";
 import "./index.scss";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import PaymentCard from "./paymentCard";
 import OrderDetail from "./orderDetail";
 import PaymentInfo from "./paymentInfo";
@@ -12,19 +10,50 @@ import castPrice from "../../utils/castPrice";
 import { useSearchParams, useParams } from "react-router-dom";
 import cartAPI from "../../api/cart.api";
 import productAPI from "../../api/product.api";
+import orderAPI from "../../api/order.api";
+import PopupConfirm from "../../components/popupConfirm";
 
-const Payment = () => {
+const Payment = ({ notify }) => {
   const [searchParams] = useSearchParams();
   const { paymentType } = useParams();
+  const [addressId, setAddressId] = useState();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const notify = (msg, type = "SUCCESS") => {
-    toast.success(msg, { type: toast.TYPE[type] });
+  const openPopup = () => {
+    setIsPopupOpen(true);
   };
 
-  const handlePayment = () => {};
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const handlePayment = async () => {
+    let _products = products.map((item, index) => {
+      return {
+        product: item.product._id,
+        quantityOrdered: item.quantityAdded,
+      };
+    });
+    let order = {
+      products: _products,
+      deliveryInfo: addressId,
+      orderDate: new Date(),
+    };
+    let typeOrder = paymentType === "cart" ? "cart" : "";
+
+    try {
+      await orderAPI.addOrder(order, typeOrder);
+      notify("Đặt món thành công");
+      notify("Vui lòng kiểm tra lịch sử mua để xem tiến trình đơn đặt", "INFO");
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      notify(err.response?.data, "ERROR");
+    }
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -51,7 +80,6 @@ const Payment = () => {
   return (
     <>
       <Header />
-      <ToastContainer />
       <div className="payment">
         <div className="container mt-5 mb-5 px-5">
           <div className="mb-4">
@@ -61,24 +89,34 @@ const Payment = () => {
           <div className="row">
             <div className="col-md-8">
               <div className="card p-3">
-                <OrderDetail products={products} notify={notify} />
-                <PaymentInfo />
+                <OrderDetail products={products} />
+                <PaymentInfo setAddressId={setAddressId} />
               </div>
 
-              <div className="">
+              <div className="mt-3">
                 <span>
                   Tổng thanh toán:{" "}
                   <strong>
                     <i>{castPrice(totalCost)}đ</i>
                   </strong>
                 </span>
-                <button className="btn btn-success" onClick={handlePayment}>
-                  Thanh toán
+                <button
+                  className="btn btn-success ms-3 ps-3 pe-3"
+                  onClick={openPopup}
+                  disabled= {addressId ? false : true}
+                >
+                  Đặt món
                 </button>
               </div>
             </div>
-
-            <PaymentCard totalCost={totalCost}/>
+            {isPopupOpen && (
+              <PopupConfirm
+                message={"Bạn có chắc muốn đặt món không?"}
+                closePopup={closePopup}
+                handleAction={handlePayment}
+              />
+            )}
+            <PaymentCard totalCost={totalCost} />
           </div>
         </div>
       </div>

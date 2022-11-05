@@ -1,0 +1,30 @@
+
+#address-modal {
+    padding: 0 40px !important;
+    position: relative;
+    overflow: hidden !important;
+    .btn-close-modal {
+        position: absolute;
+        font-size: 25px;
+        right: 10px;
+        top: -5px;
+        padding: 3px;
+        cursor: pointer;
+        color: red;
+    }
+    .title {
+        padding-top: 10px;
+    }
+    .add-user-form {
+        padding: 10px;
+        label {
+            padding-bottom: 3px;
+        }
+    }
+    .add-address-modal__submit-btn button{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+}
+

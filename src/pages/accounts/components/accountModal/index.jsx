@@ -52,7 +52,7 @@ const AccountModal = ({ isModalOpened, closeModal, notify, getAccounts }) => {
     } else if (accountInfo.password !== accountInfo.rePassword) {
       errMsgPw = "Mật khẩu bạn nhập không trùng nhau";
     }
-    debugger
+    
     if (errMsgUserName || errMsgEmail || errMsgPw || errMsgRePw) {
       setErrMsg({
         userName: errMsgUserName,

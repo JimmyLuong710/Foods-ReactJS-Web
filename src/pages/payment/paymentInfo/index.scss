@@ -1,0 +1,23 @@
+.payment-info {
+    .btn-pick-address {
+        button {
+            outline: none;
+            border: none;
+            color: white;
+            background-color: red;
+            padding: 7px 20px;
+            border-radius: 3px;
+        }
+    }
+    .address-info {
+        display: flex;
+        margin-top: 20px;
+        h5 { 
+           
+        }
+        >div.address-detail {
+            // margin-top: 5px;
+            padding-left: 20px;
+        }
+    }
+}

@@ -1,0 +1,60 @@
+
+#picking-address-modal {
+    padding: 10px 20px !important;
+    position: relative;
+    overflow: hidden !important;
+    .btn-close-modal {
+        position: absolute;
+        font-size: 25px;
+        right: 10px;
+        top: -5px;
+        padding: 3px;
+        cursor: pointer;
+        color: red;
+    }
+    .title {
+        padding-bottom: 10px;
+        border-bottom: #80808052 1px solid;
+    }
+    .list-address {
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none; 
+        margin: 20px 0 20px 10px;
+        max-height: 75%;
+        &::-webkit-scrollbar {
+            display: none; /* for Chrome, Safari, and Opera */
+        }
+        .address__content--row {
+            position: relative;
+            margin-bottom: 20px;
+            p {
+                margin: 0;
+                padding: 0;
+            }
+            h6 {
+                margin: 0;
+            }
+            input {
+                position: absolute;
+                top: 5px;
+                width: 15px;
+                height: 15px;
+                cursor: pointer;
+            }
+            .address__content {
+                // margin: px 0;
+                padding-left: 30px;
+            }
+        }
+    }
+    .btn-pick-address button{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        border: none;
+        outline: none;
+        background-color: red;
+    }
+}
+
