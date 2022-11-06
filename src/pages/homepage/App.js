@@ -10,7 +10,6 @@ import Members from "./components/members";
 import ProductsOverRate from "./components/productsOverRate";
 import Drinks from "./components/drinks";
 import Foods from "./components/foods";
-import PopupConfirm from "../../components/popupConfirm";
 
 const App = () => {
   let [activeOn, setActiveOn] = useState("home");

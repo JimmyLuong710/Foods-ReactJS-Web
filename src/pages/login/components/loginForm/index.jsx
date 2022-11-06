@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { onSignIn } from "../../../../redux/action/auth.action";
 import "./index.scss";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { err, loading } = useSelector((state) => state.auth);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

@@ -2,17 +2,20 @@ import "./index.scss";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useEffect } from "react";
 import accountAPI from "../../api/account.api";
 import AccountModal from "./components/accountModal";
 import AccountTable from "./components/accountTable";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactPaginate from "react-paginate";
 
 const Accounts = () => {
   const [accounts, setAccounts] = useState([]);
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({});
 
   const notify = (msg, type = "SUCCESS") => {
     toast.success(msg, { type: toast.TYPE[type] });
@@ -26,14 +29,22 @@ const Accounts = () => {
     setIsModalOpened(false);
   }
 
-  const getAccounts = async (params = {sort: "createdAt"}) => {
-    let res = await accountAPI.getAccounts(params);
+  const getAccounts = useCallback(async (params = { sort: "createdAt" }) => {
+    let res = await accountAPI.getAccounts({
+      sort: "createdAt",
+      page: currentPage
+    });
     setAccounts([...res.docs]);
+    setPagination(res.pagination);
+  }, [currentPage]);
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected + 1);
   };
 
   useEffect(() => {
     getAccounts();
-  }, []);
+  }, [getAccounts]);
 
   return (
     <>
@@ -60,6 +71,29 @@ const Accounts = () => {
           getAccounts={getAccounts}
           notify={notify}
         />
+
+        {accounts.length > 0 && (
+          <ReactPaginate
+            nextLabel="next >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={2}
+            pageCount={pagination.totalPages}
+            previousLabel="< prev"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakLabel="..."
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
+            renderOnZeroPageCount={null}
+          />
+        )}
       </div>
       <Footer />
     </>

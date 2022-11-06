@@ -17,3 +17,13 @@ button:focus {
   outline: none !important;
   box-shadow: none !important;
 }
+
+.pagination {
+  justify-content: center;
+  margin-top: 35px;
+  li {
+    a {
+      z-index: 0 !important;
+    }
+  }
+}
