@@ -2,6 +2,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import productAPI from "../../../../api/product.api";
 import { useEffect } from "react";
+import "./index.scss";
 
 // custom style default of react modal
 const customStyles = {
@@ -28,7 +29,11 @@ const ProductModal = ({
     productName: "",
     price: "",
     description: "",
+    type: "food",
+    status: "active",
   });
+
+  console.log(productInfo);
 
   const onProductInfoChange = (e, key) => {
     setProductInfo({
@@ -47,6 +52,8 @@ const ProductModal = ({
     formData.append("productName", productInfo.productName);
     formData.append("description", productInfo.description);
     formData.append("price", productInfo.price);
+    formData.append("type", productInfo.type);
+    formData.append("status", productInfo.status);
 
     if (typeActionModal === "add") {
       try {
@@ -89,19 +96,7 @@ const ProductModal = ({
       <h2 className="text-center">
         {typeActionModal === "add" ? "THÊM SẢN PHẨM MỚI" : "SỬA ĐỔI SẢN PHẨM"}
       </h2>
-      <span
-        className="btn-close-modal"
-        onClick={closeModal}
-        style={{
-          position: "absolute",
-          fontSize: "25px",
-          right: "10px",
-          top: "-5px",
-          padding: "3px",
-          cursor: "pointer",
-          color: "red",
-        }}
-      >
+      <span className="btn-close-modal" onClick={closeModal}>
         x
       </span>
       <form>
@@ -126,21 +121,23 @@ const ProductModal = ({
           </div>
           <div className="col-6 mt-3 mb-3">
             <label>Loại sản phẩm: </label>
-            <input
-              type="text"
-              className="form-control"
+            <select
               value={productInfo.type}
               onChange={(e) => onProductInfoChange(e, "type")}
-            />
+            >
+              <option value="food">Đồ ăn</option>
+              <option value="drink">Đồ uống</option>
+            </select>
           </div>
           <div className="col-6 mt-3 mb-3">
             <label>Tính trạng: </label>
-            <input
-              type="text"
-              className="form-control"
+            <select
               value={productInfo.status}
               onChange={(e) => onProductInfoChange(e, "status")}
-            />
+            >
+              <option value="active">Còn bán</option>
+              <option value="disabled">Hết hàng</option>
+            </select>
           </div>
           <div className="col-6 mt-3 mb-3">
             <label>Mô tả sản phẩm:</label>

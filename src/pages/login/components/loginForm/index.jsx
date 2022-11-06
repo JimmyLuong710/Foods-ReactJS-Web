@@ -1,27 +1,41 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { onSignIn } from "../../../../redux/action/auth.action";
 import "./index.scss";
 
-const LoginForm = () => {
+const LoginForm = ({ notify }) => {
   const dispatch = useDispatch();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState({});
+  const { error } = useSelector((state) => state.auth);
 
+  error && notify(error, "ERROR");
   const account = {
     userName: username,
     password: password,
   };
+
   let onUsernameChange = (e) => {
     setUsername(e.target.value);
   };
   let onPasswordChange = (e) => {
     setPassword(e.target.value);
   };
-  let handleLogin = async (e) => {
-    dispatch(onSignIn(account))
+
+  let handleLogin = async () => {
+    let usernameMsg = username ? "" : "Tên đăng nhập không được để trống";
+    let pwMsg = password ? "" : "Mật khẩu không được để trống";
+    setErrMsg({
+      userName: usernameMsg,
+      password: pwMsg,
+    });
+    if (usernameMsg || pwMsg) {
+      return
+    }
+    dispatch(onSignIn(account));
   };
   return (
     <section className="bg-image">
@@ -36,15 +50,19 @@ const LoginForm = () => {
                   </h2>
                   <form className="form-login">
                     <div className="form-outline mb-3">
-                      <label>Tên đăng nhập</label>
+                      <label>Tên đăng nhập / email</label>
                       <input
                         type="text"
                         className="form-control form-control-lg"
                         id="email"
                         value={username}
                         onChange={(e) => onUsernameChange(e)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleLogin();
+                          return
+                        }}
                       />
-                      {/* <p className="message">{message.userName}</p> */}
+                      <p className="message">{errMsg.userName}</p>
                     </div>
 
                     <div className="form-outline mb-3">
@@ -55,8 +73,12 @@ const LoginForm = () => {
                         id="pwd"
                         value={password}
                         onChange={(e) => onPasswordChange(e)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleLogin();
+                          return
+                        }}
                       />
-                      {/* <p className="message"> {message.password} </p> */}
+                      <p className="message"> {errMsg.password} </p>
                     </div>
 
                     <div className="d-flex justify-content-center">
@@ -74,7 +96,8 @@ const LoginForm = () => {
                         <Link to="/">Quên mật khẩu?</Link>
                       </p>
                       <p className="text-center text-muted">
-                        Chưa có tài khoản? <Link to="/auth/sign-up">Đăng ký</Link>
+                        Chưa có tài khoản?{" "}
+                        <Link to="/auth/sign-up">Đăng ký</Link>
                       </p>
                       <p className="text-center text-muted">
                         <Link to="/">Quay về trang chủ</Link>

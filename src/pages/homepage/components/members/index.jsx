@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Navigation,FreeMode, Pagination } from "swiper";
-import "./member.scss";
+import "./index.scss";
 import "swiper/css/bundle";
 import {ImStarEmpty} from 'react-icons/im'
 
@@ -11,7 +11,7 @@ const Members = () => {
   return (
     <div className="members">
        <div className="container">
-       <h2>Our team members</h2>
+       <h2 >Our team members</h2>
       <Swiper
         navigation={true}
         grabCursor={true}

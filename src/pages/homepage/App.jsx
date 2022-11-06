@@ -3,13 +3,13 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { useState } from "react";
 import Nav from "./components/nav";
-import Jumbotron from "./components/jumbotron";
 import AllProduct from "./components/allProducts";
 import ProductsNew from "./components/productsNew";
 import Members from "./components/members";
 import ProductsOverRate from "./components/productsOverRate";
 import Drinks from "./components/drinks";
 import Foods from "./components/foods";
+import Slider from './components/slider'
 
 const App = () => {
   let [activeOn, setActiveOn] = useState("home");
@@ -20,7 +20,7 @@ const App = () => {
       <Nav setActiveOn={setActiveOn} />
       {activeOn === "home" && (
         <>
-          <Jumbotron />
+          <Slider />
           <ProductsNew />
           <ProductsOverRate />
           <Members />

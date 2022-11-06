@@ -1,8 +1,8 @@
 import LoginForm from "./components/loginForm";
 
-const LogIn = () => {
+const LogIn = ({notify}) => {
   return (
-  <LoginForm />
+  <LoginForm notify={notify}/>
   )
 };
 
