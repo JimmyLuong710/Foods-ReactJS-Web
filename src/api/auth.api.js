@@ -15,10 +15,16 @@ const logOut = async () => {
     return response
 }
 
+const changePassword = async (password, newPassword) => {
+    let response = await AxiosAuth.post('/auth/change-password', {password, newPassword})
+    return response
+}
+
 const authAPI = {
     signIn, 
     signUp,
-    logOut
+    logOut,
+    changePassword
 }
 
 export default authAPI
