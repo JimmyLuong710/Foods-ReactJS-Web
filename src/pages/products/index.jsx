@@ -2,8 +2,7 @@ import "./index.scss";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ProductModal from "./components/productModal";
 import ProductTable from "./components/productTable";
 import productAPI from "../../api/product.api";
@@ -11,7 +10,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReactPaginate from "react-paginate";
 import { useCallback } from "react";
-
+import { AiOutlineSearch } from "react-icons/ai";
 
 const ManageProduct = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -20,6 +19,9 @@ const ManageProduct = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({});
+  const [keySearch, setKeySearch] = useState("")
+  let page = useRef(1)
+
 
   const notify = (msg, type = "SUCCESS") => {
     toast.success(msg, { type: toast.TYPE[type] });
@@ -39,14 +41,27 @@ const ManageProduct = () => {
     setIsModalOpened(false);
   };
 
-  const getProducts = useCallback(async () => {
-    let res = await productAPI.getProducts({page: currentPage});
-    setProducts([...res.docs]);
-    setPagination(res.pagination)
-  }, [currentPage])
+  const onKeySearchChange = (e) => {
+    setKeySearch(e.target.value)
+    if(e.target.value) {
+      setCurrentPage(1);
+    } else {
+      setCurrentPage(page.current);
+    }
+  };
+
+  const getProducts = useCallback(
+    async (params = { page: currentPage, limit: 5, key: keySearch }) => {
+      let res = await productAPI.getProducts(params);
+      setProducts([...res.docs]);
+      setPagination(res.pagination);
+    },
+    [currentPage, keySearch]
+  );
 
   const handlePageClick = (event) => {
     setCurrentPage(event.selected + 1);
+    page.current = event.selected + 1
   };
 
   useEffect(() => {
@@ -59,9 +74,21 @@ const ManageProduct = () => {
       <ToastContainer />
       <div className="container mt-5 mb-5 management-products">
         <div className="title">
-          <span onClick={(e) => openProductModal("add")}>
-            <IoMdAddCircleOutline /> Thêm sản phẩm
-          </span>
+          <h3 className="">QUẢN LÝ SẢN PHẨM</h3>
+          <div className="btn-action">
+            <span>
+              <input
+                type="text"
+                onChange={onKeySearchChange}
+                placeholder="Tìm kiếm"
+              />{" "}
+              <AiOutlineSearch className="search" />
+            </span>
+            <span onClick={(e) => openProductModal("add")}>
+              <IoMdAddCircleOutline /> Thêm sản phẩm
+            </span>
+          </div>
+
           {isModalOpened && (
             <ProductModal
               isModalOpened={isModalOpened}
@@ -72,7 +99,6 @@ const ManageProduct = () => {
               notify={notify}
             />
           )}
-          <h3 className="">QUẢN LÝ SẢN PHẨM</h3>
         </div>
 
         <ProductTable
@@ -80,8 +106,9 @@ const ManageProduct = () => {
           products={products}
           getProducts={getProducts}
           notify={notify}
+          currentPage={currentPage}
         />
-        
+
         {products.length > 0 && (
           <ReactPaginate
             nextLabel="next >"

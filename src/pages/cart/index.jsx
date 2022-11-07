@@ -5,6 +5,7 @@ import { useState, useCallback, useEffect } from "react";
 import cartAPI from "../../api/cart.api";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import './index.scss'
 
 const Cart = () => {
   console.log('cart')

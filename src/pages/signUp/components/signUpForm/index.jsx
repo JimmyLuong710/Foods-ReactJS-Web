@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { onSignUp } from "../../../../redux/action/auth.action";
 
-const SignUpForm = () => {
+const SignUpForm = ({ notify }) => {
   const dispatch = useDispatch();
-  const [error, setError] = useState("");
   let [account, setAccount] = useState({
     userName: "",
     email: "",
@@ -43,18 +42,21 @@ const SignUpForm = () => {
       passwordM = "Mật khẩu bạn nhập không trùng nhau";
     }
 
-    if (!userNameM && !emailM && !passwordM) {
-      let response = await dispatch(onSignUp(account));
-      if (response?.error) {
-        setError(response.payload);
-      }
+    if (userNameM || emailM || passwordM) {
+      setErrMessage({
+        userName: userNameM,
+        email: emailM,
+        password: passwordM,
+      });
+      return;
     }
 
-    setErrMessage({
-      userName: userNameM,
-      email: emailM,
-      password: passwordM,
-    });
+    try {
+      await dispatch(onSignUp(account)).unwrap();
+    } catch (err) {
+      notify(err, "ERROR");
+      setErrMessage({})
+    }
   };
 
   return (
@@ -79,6 +81,9 @@ const SignUpForm = () => {
                         className="form-control form-control-lg"
                         value={account.userName}
                         onChange={(e) => onAccountChange(e, "userName")}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleSubmit();
+                        }}
                       />
                       <p className="message">{errMessage.userName}</p>
                     </div>
@@ -90,6 +95,9 @@ const SignUpForm = () => {
                         className="form-control form-control-lg"
                         value={account.email}
                         onChange={(e) => onAccountChange(e, "email")}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleSubmit();
+                        }}
                       />
                       <p className="message">{errMessage.email}</p>
                     </div>
@@ -102,6 +110,9 @@ const SignUpForm = () => {
                         className="form-control form-control-lg"
                         value={account.password}
                         onChange={(e) => onAccountChange(e, "password")}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleSubmit();
+                        }}
                       />
                       <p className="message"> {errMessage.password} </p>
                     </div>
@@ -113,10 +124,11 @@ const SignUpForm = () => {
                         className="form-control form-control-lg"
                         value={account.rePassword}
                         onChange={(e) => onAccountChange(e, "rePassword")}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleSubmit();
+                        }}
                       />
                     </div>
-
-                    <p className="message text-center">{error}</p>
 
                     <div className="d-flex justify-content-center">
                       <button

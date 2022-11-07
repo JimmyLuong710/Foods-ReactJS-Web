@@ -15,24 +15,10 @@
             // margin: 0 auto;
         }
     }
-    .swiper {
-        border: none;
-        .swiper-wrapper {
-            border: none;
-            .swiper-slide {
-                border: none !important;
-            }
-        }
-    }
-    .swiper-button-next, .swiper-button-prev, .swiper-pagination, .swiper-item__img {
-        border: none;
-    }
-   
+
     .swiper-item {
         height: 400px;
-
         .swiper-item__img {
-
             img {
                 width: 100%;
                 object-fit: cover;

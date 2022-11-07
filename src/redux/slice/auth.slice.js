@@ -51,7 +51,7 @@ const authSlice = createSlice({
       })
       .addCase(onSignUp.fulfilled, (state, action) => {
         state.loading = "idle";
-        // window.location.href = "/auth/sign-in";
+        window.location.href = "/auth/sign-in";
       })
       .addCase(onSignUp.rejected, (state, action) => {
         state.loading = "idle";
@@ -65,7 +65,6 @@ const authSlice = createSlice({
         state.account = initialState.account;
         state.isLoggedIn = false;
         state.loading = "idle";
-        // window.location.href = "/auth/sign-in";
       })
       .addCase(onLogOut.rejected, (state, action) => {
         state.loading = "idle";

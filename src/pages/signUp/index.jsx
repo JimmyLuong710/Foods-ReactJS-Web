@@ -1,9 +1,9 @@
 import SignUpForm from "./components/signUpForm";
 
-const SignUp = () => {
+const SignUp = ({notify}) => {
 
     return (
-        <SignUpForm />
+        <SignUpForm notify={notify} />
     )
 }
 

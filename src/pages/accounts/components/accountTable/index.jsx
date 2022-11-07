@@ -3,7 +3,7 @@ import { MdDelete } from "react-icons/md";
 import accountAPI from "../../../../api/account.api";
 import PopupConfirm from "../../../../components/popupConfirm";
 
-const AccountTable = ({ accounts, notify, getAccounts }) => {
+const AccountTable = ({ accounts, notify, getAccounts, currentPage }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [accountIdPicked, setAccountIdPicked] = useState("");
 
@@ -40,7 +40,7 @@ const AccountTable = ({ accounts, notify, getAccounts }) => {
       <tbody>
         {accounts?.map((account, index) => (
           <tr key={index}>
-            <td>{index + 1}</td>
+            <td>{(currentPage - 1) * 6 + (index + 1)}</td>
             <td>{account.userName}</td>
             <td>{account.email}</td>
             <td>{account.role}</td>

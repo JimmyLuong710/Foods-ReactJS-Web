@@ -27,8 +27,26 @@ const Routers = () => {
     <BrowserRouter>
       <ToastContainer />
       <Routes>
-        <Route path="/auth/sign-in" element={<Login notify={notify} />} />
-        <Route path="/auth/sign-up" element={<SignUp />} />
+        <Route
+          path="/auth/sign-in"
+          element={
+            !auth.isLoggedIn ? (
+              <Login notify={notify} />
+            ) : (
+              <Navigate replace to={"/"} />
+            )
+          }
+        />
+        <Route
+          path="/auth/sign-up"
+          element={
+            !auth.isLoggedIn ? (
+              <SignUp notify={notify} />
+            ) : (
+              <Navigate replace to={"/"} />
+            )
+          }
+        />
         <Route path="/" element={<App />} />
 
         <Route path="/products/:productId" element={<ProductDetails />} />

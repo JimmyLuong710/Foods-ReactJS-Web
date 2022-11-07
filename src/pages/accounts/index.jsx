@@ -2,20 +2,22 @@ import "./index.scss";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { useCallback, useState } from "react";
-import { useEffect } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import accountAPI from "../../api/account.api";
 import AccountModal from "./components/accountModal";
 import AccountTable from "./components/accountTable";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReactPaginate from "react-paginate";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Accounts = () => {
   const [accounts, setAccounts] = useState([]);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({});
+  const [keySearch, setKeySearch] = useState("");
+  let page = useRef(1)
 
   const notify = (msg, type = "SUCCESS") => {
     toast.success(msg, { type: toast.TYPE[type] });
@@ -29,17 +31,29 @@ const Accounts = () => {
     setIsModalOpened(false);
   }
 
-  const getAccounts = useCallback(async (params = { sort: "createdAt" }) => {
-    let res = await accountAPI.getAccounts({
-      sort: "createdAt",
-      page: currentPage
-    });
-    setAccounts([...res.docs]);
-    setPagination(res.pagination);
-  }, [currentPage]);
+  const onKeySearchChange = (e) => {
+    setKeySearch(e.target.value);
+    if(e.target.value) {
+      setCurrentPage(1);
+    } else {
+      setCurrentPage(page.current);
+    }
+  };
+
+  const getAccounts = useCallback(
+    async (
+      params = { page: currentPage, sort: "createdAt", key: keySearch }
+    ) => {
+      let res = await accountAPI.getAccounts(params);
+      setAccounts([...res.docs]);
+      setPagination(res.pagination);
+    },
+    [currentPage, keySearch]
+  );
 
   const handlePageClick = (event) => {
     setCurrentPage(event.selected + 1);
+    page.current = event.selected + 1
   };
 
   useEffect(() => {
@@ -52,9 +66,21 @@ const Accounts = () => {
       <ToastContainer />
       <div className="container mt-5 mb-5 management-users">
         <div className="title">
-          <span onClick={openModal}>
-            <IoMdAddCircleOutline /> Thêm người dùng
-          </span>
+          <h3 className="">QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG</h3>
+          <div className="btn-action">
+            <span>
+              <input
+                type="text"
+                onChange={onKeySearchChange}
+                placeholder="Tìm kiếm"
+              />
+              <AiOutlineSearch className="search" />
+            </span>
+            <span onClick={openModal}>
+              <IoMdAddCircleOutline /> Thêm người dùng
+            </span>
+          </div>
+
           {isModalOpened && (
             <AccountModal
               isModalOpened={isModalOpened}
@@ -63,13 +89,13 @@ const Accounts = () => {
               getAccounts={getAccounts}
             />
           )}
-          <h3 className="">QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG</h3>
         </div>
 
         <AccountTable
           accounts={accounts}
           getAccounts={getAccounts}
           notify={notify}
+          currentPage={currentPage}
         />
 
         {accounts.length > 0 && (

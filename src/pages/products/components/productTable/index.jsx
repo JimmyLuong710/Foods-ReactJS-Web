@@ -5,7 +5,7 @@ import castPrice from "../../../../utils/castPrice";
 import { useState } from "react";
 import PopupConfirm from "../../../../components/popupConfirm";
 
-const ProductTable = ({ products, openProductModal, getProducts, notify }) => {
+const ProductTable = ({ products, openProductModal, getProducts, notify, currentPage }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [productIdPicked, setProductIdPicked] = useState("");
 
@@ -43,7 +43,7 @@ const ProductTable = ({ products, openProductModal, getProducts, notify }) => {
       <tbody>
         {products?.map((product, index) => (
           <tr key={index}>
-            <td style={{ width: "5%" }}>{index + 1}</td>
+            <td style={{ width: "5%" }}>{(currentPage - 1) * 5 + (index + 1)}</td>
             <td style={{ width: "25%" }}>
               <div className="img-product">
                 <img

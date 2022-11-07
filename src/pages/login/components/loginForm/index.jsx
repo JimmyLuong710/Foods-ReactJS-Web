@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { onSignIn } from "../../../../redux/action/auth.action";
@@ -10,9 +9,7 @@ const LoginForm = ({ notify }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState({});
-  const { error } = useSelector((state) => state.auth);
 
-  error && notify(error, "ERROR");
   const account = {
     userName: username,
     password: password,
@@ -33,9 +30,14 @@ const LoginForm = ({ notify }) => {
       password: pwMsg,
     });
     if (usernameMsg || pwMsg) {
-      return
+      return;
     }
-    dispatch(onSignIn(account));
+    try {
+      await dispatch(onSignIn(account)).unwrap();
+    } catch (err) {
+      console.log(err);
+      notify(err, "ERROR");
+    }
   };
   return (
     <section className="bg-image">
@@ -59,7 +61,7 @@ const LoginForm = ({ notify }) => {
                         onChange={(e) => onUsernameChange(e)}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") handleLogin();
-                          return
+                          return;
                         }}
                       />
                       <p className="message">{errMsg.userName}</p>
@@ -75,7 +77,6 @@ const LoginForm = ({ notify }) => {
                         onChange={(e) => onPasswordChange(e)}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") handleLogin();
-                          return
                         }}
                       />
                       <p className="message"> {errMsg.password} </p>
