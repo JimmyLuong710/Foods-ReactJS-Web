@@ -8,11 +8,10 @@ import Products from "../pages/products";
 import Payment from "../pages/payment";
 import Account from "../pages/account";
 import Orders from "../pages/orders";
+import Search from "../pages/search";
 import OrdersPending from "../pages/orderPending";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import Search from "../pages/search/search";
-
 import Login from "../pages/login";
 import { useSelector } from "react-redux";
 
@@ -47,7 +46,7 @@ const Routers = () => {
             )
           }
         />
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<App notify={notify} />} />
 
         <Route path="/products/:productId" element={<ProductDetails />} />
         <Route
@@ -114,10 +113,7 @@ const Routers = () => {
             )
           }
         />
-        {/*
-        
-        <Route path="/search/:key" element={ <Search />} />
-        */}
+        <Route path="/products/search" element={<Search notify={notify} />} />
       </Routes>
     </BrowserRouter>
   );

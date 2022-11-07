@@ -9,9 +9,9 @@ import Members from "./components/members";
 import ProductsOverRate from "./components/productsOverRate";
 import Drinks from "./components/drinks";
 import Foods from "./components/foods";
-import Slider from './components/slider'
+import Slider from "./components/slider";
 
-const App = () => {
+const App = ({ notify }) => {
   let [activeOn, setActiveOn] = useState("home");
 
   return (
@@ -21,14 +21,14 @@ const App = () => {
       {activeOn === "home" && (
         <>
           <Slider />
-          <ProductsNew />
-          <ProductsOverRate />
+          <ProductsNew notify={notify} />
+          <ProductsOverRate notify={notify} />
           <Members />
         </>
       )}
-      {activeOn === "drinks" && <Drinks />}
-      {activeOn === "foods" && <Foods />}
-      {activeOn === "all" && <AllProduct />}
+      {activeOn === "drinks" && <Drinks notify={notify} />}
+      {activeOn === "foods" && <Foods notify={notify} />}
+      {activeOn === "all" && <AllProduct notify={notify} />}
       <Footer />
     </div>
   );

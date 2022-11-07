@@ -7,33 +7,26 @@ import "./index.scss";
 import "swiper/css/bundle";
 import ProductCard from "../../../../components/productCard";
 import React, { useState } from "react";
-import productAPI from "../../../../api/product.api"
+import productAPI from "../../../../api/product.api";
 import { useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
-const ProductsNew = () => {
-  const [products, setProducts] = useState([])
-
-  const notify = (msg, type) => {
-    toast.success(msg, { type: toast.TYPE[type] });
-  };
+const ProductsNew = ({ notify }) => {
+  const [products, setProducts] = useState([]);
 
   const getProducts = async () => {
     try {
-      let res = await productAPI.getProducts({sort: "-createdAt", limit: 8})
-      setProducts([...res.docs])
-    } catch(err) {
-      console.log(err)
+      let res = await productAPI.getProducts({ sort: "-createdAt", limit: 8 });
+      setProducts([...res.docs]);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
-  useEffect( () => {
-    getProducts()
-  }, [])
+  useEffect(() => {
+    getProducts();
+  }, []);
   return (
     <div className="new-products">
-      <ToastContainer />
       <div className="container">
         <h2>
           Các sản phẩm mới cập nhật{" "}
@@ -50,7 +43,7 @@ const ProductsNew = () => {
           {products.map((product, index) =>
             index < 10 ? (
               <SwiperSlide key={index}>
-                <ProductCard product={product} notify={notify}/>
+                <ProductCard product={product} notify={notify} />
               </SwiperSlide>
             ) : (
               <></>
@@ -62,4 +55,4 @@ const ProductsNew = () => {
   );
 };
 
-export default ProductsNew
+export default ProductsNew;

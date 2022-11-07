@@ -9,12 +9,15 @@ import ProductCard from "../../../../components/productCard";
 import { useEffect, useState } from "react";
 import productAPI from "../../../../api/product.api";
 
-const ProductsOverRate = () => {
+const ProductsOverRate = ({ notify }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const getProducts = async () => {
-      let res = await productAPI.getProducts({ sort: "-quantitySold", limit: 8 });
+      let res = await productAPI.getProducts({
+        sort: "-quantitySold",
+        limit: 8,
+      });
       setProducts([...res.docs]);
     };
     getProducts();
@@ -37,7 +40,7 @@ const ProductsOverRate = () => {
         >
           {products?.map((product, index) => (
             <SwiperSlide key={index}>
-              <ProductCard product={product} />
+              <ProductCard product={product} notify={notify} />
             </SwiperSlide>
           ))}
         </Swiper>

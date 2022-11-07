@@ -1,11 +1,10 @@
 import { useState } from "react";
 import './nav.scss'
 
-const Nav = (props) => {
+const Nav = ({setActiveOn}) => {
     let [active, setActive] = useState(['active', '', '', ''])
-    let setActiveOn = props.setActiveOn
 
-    const handleClickAcitveNav = (key, name) => {
+    const handleClickActiveNav = (key, name) => {
         let arr = ['','','','','']
         arr[key] = 'active'
         setActiveOn(name)
@@ -18,16 +17,16 @@ const Nav = (props) => {
           <div className="col-lg-6">
             <div className="nav">
               <ul>
-                <li className={active[0]} onClick={(e) => handleClickAcitveNav(0, 'home')}>
+                <li className={active[0]} onClick={(e) => handleClickActiveNav(0, 'home')}>
                   <span>Home</span>
                 </li>
-                <li className={active[1]} onClick={(e) => handleClickAcitveNav(1, 'foods')}>
+                <li className={active[1]} onClick={(e) => handleClickActiveNav(1, 'foods')}>
                   <span> Đồ ăn</span>
                 </li>
-                <li className={active[2]} onClick={(e) => handleClickAcitveNav(2, 'drinks')}>
+                <li className={active[2]} onClick={(e) => handleClickActiveNav(2, 'drinks')}>
                   <span> Đồ uống </span>
                 </li>
-                <li className={active[3]} onClick={(e) => handleClickAcitveNav(3, 'all')} >
+                <li className={active[3]} onClick={(e) => handleClickActiveNav(3, 'all')} >
                   <span> Tất cả sản phẩm </span>
                 </li>
               </ul>

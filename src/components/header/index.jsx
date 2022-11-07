@@ -20,7 +20,7 @@ const Header = () => {
 
   const handleSearchKeyDown = (e) => {
     if (e.key === "Enter") {
-      navigate(`/search/${key}`);
+      navigate(`/products/search?key=${key}`);
     }
   };
 
