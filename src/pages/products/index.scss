@@ -54,10 +54,13 @@
     td {
       .img-product {
         width: 40%;
+        height: 100px;
         float: left;
         img {
           width: 100%;
-          height: auto;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 3px;
         }
       }
       .product-name {
